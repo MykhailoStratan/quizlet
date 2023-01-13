@@ -4,6 +4,7 @@ import Menu from './components/Menu/Menu';
 import { iCard } from './types/card.type';
 import CardsCarousel from './components/CardsCarousel/CardsCarousel';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import AddCard from './components/AddCard/AddCard';
 
 function App() {
   const cards: iCard[] = [
@@ -15,15 +16,18 @@ function App() {
   ];
   const menu = ['Home', 'Learn', 'Add New Words'];
 
+  const addCard = (card: iCard) => {
+      cards.push(card);
+  }
 
   return (
       <div className="App">
           <Router>
-              <Menu menuOptions={menu}></Menu>
+              <Menu menuOptions={ menu }></Menu>
               <Routes>
-                  <Route path="/home" element={<div style={{fontSize: "100px"}}>Welcome to Quizlet!</div>}/>
-                  <Route path="/learn" element={<CardsCarousel cards={cards}/>} />
-                  <Route path="/add-new-words" element={<CardsCarousel cards={cards}/>} />
+                  <Route path="/home" element={ <div style={{ fontSize: "100px" }}>Welcome to Quizlet!</div> }/>
+                  <Route path="/learn" element={ <CardsCarousel cards={ cards }/> } />
+                  <Route path="/add-new-words" element={ <AddCard onFormSubmit={ addCard }/> } />
               </Routes>
           </Router>
       </div>

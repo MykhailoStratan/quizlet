@@ -34,7 +34,7 @@ const CardsCarousel: FC<{cards: iCard[]}> = ({ cards }) => {
         <>
             <div
                 className="carousel"
-                onKeyDown={handleKeyDown}
+                onKeyDown={ handleKeyDown }
                 tabIndex={0}
             >
                 <div className="card-container">
@@ -45,22 +45,19 @@ const CardsCarousel: FC<{cards: iCard[]}> = ({ cards }) => {
                                 ? "activeCard"
                                 : "prevCard";
                         if (position === "activeCard") {
-                            return <div key={card.id}>
-                                    <Card {...card} cardStyle={position} key={card.id}>
-                                        <Button className="carousel-btn prev" onClick={slideLeft} ref={prevBtn}>Previous</Button>
-                                        <Button className="carousel-btn next" onClick={slideRight} ref={nextBtn}>Next</Button>
+                            return <div key={ card.id }>
+                                    <Card { ...card } cardStyle={ position } key={ card.id }>
+                                        <Button className="btn-carousel btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
+                                        <Button className="btn-carousel btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
                                     </Card>
                                 </div>
                         } else {
-                            return <Card {...card} cardStyle={position} key={card.id}></Card>
+                            return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }
                     }) }
                 </div>
-
             </div>
-
         </>
-
     );
 }
 

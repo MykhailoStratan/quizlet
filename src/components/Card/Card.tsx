@@ -1,13 +1,18 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './Card.scss';
 import { iCard } from '../../types/card.type';
 
 interface CardProps extends iCard {
     cardStyle: string;
+    children?: any;
 }
 
-const Card: FC<CardProps> = ({ id, word, translation , cardStyle, children }) =>  {
-    const [flipped, setFlipped] = useState(false);
+const Card: FC<CardProps> = ({ id, word, translation , cardStyle='', children }) =>  {
+    const [flipped, setFlipped] = useState(true);
+
+    useEffect(() => {
+        setFlipped(true);
+    }, []);
 
     const flipCard = () => {
         setFlipped(!flipped);

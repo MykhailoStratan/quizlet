@@ -13,21 +13,19 @@
   height: 22rem;
 }
 
-.carousel-btn {
+.btn-carousel {
   width: 100px;
   height: 40px;
   position: absolute;
   top: 105%;
-  border: 1px solid transparent;
   border-radius: 5px;
+  background-color: #5B4BBC;
 }
 
-.prev {
+.btn-prev {
   left: 20%;
-  background-color: #5B4BBC;
 }
 
-.next {
+.btn-next {
   right: 20%;
-  background-color: #5B4BBC;
 }

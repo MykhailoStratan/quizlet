@@ -1,6 +1,7 @@
 import { FC, useState } from 'react';
 import './Menu.scss';
 import { Link } from 'react-router-dom';
+import Button from '../UI/Button/Button';
 
 type MenuProps = {
     menuOptions: string[];
@@ -16,7 +17,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
     const [activeMenuId, setActiveMenuId] = useState(0);
 
     const menuOptionClass = (id: number) => {
-        return id === activeMenuId ? '' : 'active';
+        return id === activeMenuId ? 'menu-option' : 'menu-option active';
     };
     const menuClick = (id: number) => {
         setActiveMenuId(id);
@@ -26,12 +27,19 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
         <div className="menu">
             <ul>
                 {menu.map(option => {
-                    return <li
-                        key={ option.id }
-                        id={ option.id.toString() }
-                        className={ menuOptionClass(option.id) }
-                        onClick={ () => menuClick(option.id) }
-                    ><Link to={'/'+option.name.toLowerCase().replaceAll(' ', '-')}>{ option.name }</Link></li>
+                    return <Link
+                        to={'/' + option.name.toLowerCase().replaceAll(' ', '-')}
+                        key={option.id}
+                    >
+                        <li
+                            key={ option.id }
+                            id={ option.id.toString() }
+                        ><Button
+                            className={ menuOptionClass(option.id) }
+                            onClick={ () => menuClick(option.id) }
+                        >{ option.name }</Button>
+                        </li>
+                    </Link>
                 })}
             </ul>
         </div>
