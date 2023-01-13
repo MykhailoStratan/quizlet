@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react';
-import './Card.scss';
 import { iCard } from '../../types/card.type';
+import './Card.scss';
 
 interface CardProps extends iCard {
     cardStyle: string;

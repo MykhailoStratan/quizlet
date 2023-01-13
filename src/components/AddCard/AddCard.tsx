@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import { v4 as uuid } from 'uuid';
 import { iCard } from '../../types/card.type';
 import Button from '../UI/Button/Button';

@@ -1,4 +1,4 @@
-import { FC, KeyboardEventHandler, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { iCard } from '../../types/card.type';
 import Card from '../Card/Card';
 import './CardsCarousel.scss';
@@ -45,12 +45,10 @@ const CardsCarousel: FC<{cards: iCard[]}> = ({ cards }) => {
                                 ? "activeCard"
                                 : "prevCard";
                         if (position === "activeCard") {
-                            return <div key={ card.id }>
-                                    <Card { ...card } cardStyle={ position } key={ card.id }>
+                            return <Card { ...card } cardStyle={ position } key={ card.id }>
                                         <Button className="btn-carousel btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
                                         <Button className="btn-carousel btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
                                     </Card>
-                                </div>
                         } else {
                             return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }
