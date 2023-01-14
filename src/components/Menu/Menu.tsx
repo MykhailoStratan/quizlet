@@ -2,6 +2,8 @@ import { FC, useState } from 'react';
 import './Menu.scss';
 import { Link } from 'react-router-dom';
 import Button from '../UI/Button/Button';
+// @ts-ignore
+import {firebaseConfig} from '../../firebase/firebase';
 
 type MenuProps = {
     menuOptions: string[];
@@ -14,6 +16,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
             id: index,
         }
     });
+
     const [activeMenuId, setActiveMenuId] = useState(0);
 
     const menuOptionClass = (id: number) => {
