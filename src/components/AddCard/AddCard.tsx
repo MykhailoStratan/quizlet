@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import Button from '../UI/Button/Button';
 import './AddCard.scss';
-import { handleAddCardFormSubmit } from '../../firebase/handlers/handleAddCardFormSubmit';
+import { addCardToDictionary } from '../../firebase/handlers/addCardToDictionary';
 
 interface FormElements extends HTMLFormControlsCollection {
     word: HTMLInputElement;
@@ -12,19 +12,32 @@ interface AddCardFormElement extends HTMLFormElement {
     readonly elements: FormElements;
 }
 
-const AddCard = () => {
+interface AddCardProps {
+    activeUser: { [x: string]: string; };
+    dictionary: { [x: string]: string; };
+}
+
+const AddCard: FC<AddCardProps> = ({activeUser, dictionary}) => {
     const [error, setError] = useState('');
 
     const handleSubmit = async (event: React.FormEvent<AddCardFormElement>) => {
         event.preventDefault();
-        const { word, translation } = event.currentTarget;
-        const response = await handleAddCardFormSubmit('quizlet_pairs', {
-            word: word.value.trim(),
-            translation: translation.value.trim(),
-            id: uuid()
-        });
-        if (response) {
-            setError(response);
+        let { word, translation } = event.currentTarget;
+
+        try {
+            const response = await addCardToDictionary('users', activeUser.id, dictionary.id, {
+                word: word.value.trim(),
+                translation: translation.value.trim(),
+                id: uuid()
+            });
+
+            word.value = '';
+            translation.value = '';
+
+            response && setError(response);
+        } catch (error) {
+            console.log(error)
+            setError(`${error}`)
         }
     }
 
