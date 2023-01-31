@@ -4,6 +4,9 @@ import Card from '../Card/Card';
 import './CardsCarousel.scss';
 import Button from '../UI/Button/Button';
 import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromSubCollection';
+import { getAllByWord } from '../../words-api/words-api';
+import WordInfo from '../WordInfo/WordInfo';
+import {iWordInfo} from '../../types/word-info.type';
 
 interface CardsCarouselProps {
     activeUser: { [x: string]: string; };
@@ -12,19 +15,31 @@ interface CardsCarouselProps {
 
 const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
     const [cards, setCards] = useState<iCard[]>([]);
-    const [cardIndex, setCardIndex] = useState(0);
+    const [cardIndex, setCardIndex] = useState<number>(0);
+    const [currentCard, setCurrentCard] = useState<iCard>();
 
-    const prevBtn = useRef(null);
-    const nextBtn = useRef(null);
+    const [wordInfo, setWordInfo] = useState<iWordInfo>();
+    const showWordInfo = true;
+
+    const prevBtn = useRef<HTMLElement>(null);
+    const nextBtn = useRef<HTMLElement>(null);
 
     const slideLeft = () => {
-        if (cardIndex <= 0) return;
+        if (cardIndex <= 0) {
+            setCurrentCard(cards[0]);
+            return;
+        }
         setCardIndex(cardIndex - 1);
+        setCurrentCard(cards[cardIndex - 1]);
     };
 
     const slideRight = () => {
-        if (cardIndex >= cards.length-1) return;
+        if (cardIndex >= cards.length-1) {
+            setCurrentCard(cards[cards.length-1]);
+            return;
+        }
         setCardIndex(cardIndex + 1);
+        setCurrentCard(cards[cardIndex + 1]);
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement> ) => {
@@ -41,13 +56,30 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
     const fetchCards = async () => {
         const newData: iCard[] = await getCardsFromSubCollection('users', activeUser.id, dictionary.id);
         setCards(newData);
+        setCurrentCard(newData[0]);
+    }
+
+    const fetchWordInfo = async (word: string) => {
+        await getAllByWord(word).then(data => {
+            console.log(data);
+            setWordInfo(data);
+        });
     }
 
     useEffect(() => {
-        (async() => {
+        (async () => {
             await fetchCards();
         })();
+
     },[dictionary.id])
+
+    useEffect(() => {
+        (async () => {
+            if (currentCard) {
+                await fetchWordInfo(currentCard.word);
+            }
+        })();
+    }, [currentCard]);
 
     return (
         <>
@@ -62,18 +94,23 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
                             ? "nextCard"
                             : (index === cardIndex)
                                 ? "activeCard"
-                                : "prevCard";
-                        if (position === "activeCard") {
-                            return <Card { ...card } cardStyle={ position } key={ card.id }>
-                                        <Button className="btn-carousel btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
-                                        <Button className="btn-carousel btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
-                                    </Card>
+                                : 'prevCard';
+                        if (position === 'activeCard') {
+                            return <>
+                                <Card { ...card } cardStyle={ position } key={ card.id }>
+                                    <Button className="btn btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
+                                    <Button className="btn btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
+                                </Card>
+                            </>
                         } else {
                             return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }
                     })}
                 </div>
             </div>
+            {
+                showWordInfo && wordInfo ? <WordInfo wordInfo={ wordInfo }></WordInfo> : null
+            }
         </>
     );
 }

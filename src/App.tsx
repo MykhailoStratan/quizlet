@@ -51,7 +51,13 @@ function App() {
                             <DictionaryList dictionaries={ dictionaries } onDictionarySelect={ onSelectActiveDictionary }></DictionaryList>
                         </>
                     }/>
-                    <Route path="/add-new-words" element={ <AddCard activeUser={ activeUser } dictionary={ activeDictionary } /> }/>
+                    <Route path="/add-new-words" element={
+                        <>
+                            <AddCard activeUser={ activeUser } dictionary={ activeDictionary } />
+                            <DictionaryList dictionaries={ dictionaries } onDictionarySelect={ onSelectActiveDictionary }></DictionaryList>
+                        </>
+
+                    }/>
                 </Routes>
             </Router>
         </div>

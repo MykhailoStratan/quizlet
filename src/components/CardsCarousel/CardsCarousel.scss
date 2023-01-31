@@ -11,19 +11,39 @@
   height: 22rem;
 }
 
-.btn-carousel {
+.btn {
   width: 100px;
   height: 40px;
   position: absolute;
   top: 105%;
   border-radius: 5px;
   background-color: #5B4BBC;
+
+  &-prev {
+    left: 20%;
+  }
+
+  &-next {
+    right: 20%;
+  }
+
+  &-blocked {
+    background-color: grey;
+  }
 }
 
-.btn-prev {
-  left: 20%;
-}
-
-.btn-next {
-  right: 20%;
-}
+//.btn-carousel {
+//
+//}
+//
+//.btn-prev {
+//  left: 20%;
+//}
+//
+//.btn-next {
+//  right: 20%;
+//}
+//
+//.btn-blocked {
+//
+//}

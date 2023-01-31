@@ -1,7 +1,12 @@
-import React, { ChangeEvent, ChangeEventHandler, FC, FormEventHandler } from 'react';
+import React, { FC } from 'react';
 import './DictionaryList.scss';
 
-const DictionaryList: FC<{dictionaries: { id: string, name: string }[], onDictionarySelect: (dictionaryId: string) => void}> = ({dictionaries, onDictionarySelect}) => {
+interface DictionaryListProps {
+    dictionaries: { id: string, name: string }[],
+    onDictionarySelect: (dictionaryId: string) => void,
+}
+
+const DictionaryList: FC<DictionaryListProps> = ({dictionaries, onDictionarySelect}) => {
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         onDictionarySelect(event.currentTarget.value);
     }
@@ -17,7 +22,8 @@ const DictionaryList: FC<{dictionaries: { id: string, name: string }[], onDictio
                       key={ dictionary.id }
                       value={ dictionary.id }
                   >
-                      { dictionary.name }</option>
+                      { dictionary.name }
+                  </option>
               })}
           </select>
 
