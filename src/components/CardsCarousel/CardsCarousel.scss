@@ -1,4 +1,7 @@
 .carousel {
+  position: absolute;
+  top: 200px;
+  right: 5%;
   display: flex;
   gap: 50px;
   justify-content: center;
@@ -29,6 +32,19 @@
 
   &-blocked {
     background-color: grey;
+  }
+
+  &-show-word-info {
+    position: absolute;
+    left: -30%;
+    top: 50%;
+    opacity: 0.3;
+    //position: absolute;
+    //right: 0px;
+
+    &-hidden {
+      opacity: 0.3;
+    }
   }
 }
 

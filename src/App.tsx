@@ -47,14 +47,14 @@ function App() {
                     <Route path="/home" element={ <div style={{ fontSize: '100px' }}>Welcome to Quizlet!</div> }/>
                     <Route path="/learn" element={
                         <>
-                            <CardsCarousel activeUser={ activeUser } dictionary={ activeDictionary }/>
                             <DictionaryList dictionaries={ dictionaries } onDictionarySelect={ onSelectActiveDictionary }></DictionaryList>
+                            <CardsCarousel activeUser={ activeUser } dictionary={ activeDictionary }/>
                         </>
                     }/>
                     <Route path="/add-new-words" element={
                         <>
-                            <AddCard activeUser={ activeUser } dictionary={ activeDictionary } />
                             <DictionaryList dictionaries={ dictionaries } onDictionarySelect={ onSelectActiveDictionary }></DictionaryList>
+                            <AddCard activeUser={ activeUser } dictionary={ activeDictionary } />
                         </>
 
                     }/>

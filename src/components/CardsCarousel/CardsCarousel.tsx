@@ -14,12 +14,13 @@ interface CardsCarouselProps {
 }
 
 const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
+    //todo: separate wordInfo data from this component, maybe create parent for both of them
     const [cards, setCards] = useState<iCard[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iCard>();
 
     const [wordInfo, setWordInfo] = useState<iWordInfo>();
-    const showWordInfo = true;
+    const [showWordInfo, setShowWordInfo] = useState(cards.length ? true : false);
 
     const prevBtn = useRef<HTMLElement>(null);
     const nextBtn = useRef<HTMLElement>(null);
@@ -51,6 +52,19 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
         if (event.code === 'ArrowLeft') {
             slideLeft();
         }
+    }
+
+    const switchShowWordInfo = () => {
+        if (!cards.length) {
+            setShowWordInfo(false);
+            return;
+        }
+
+        setShowWordInfo(!showWordInfo);
+    }
+
+    const switchBtnWordInfoClass = () => {
+        return showWordInfo ? 'btn-show-word-info' : 'btn-show-word-info-hidden';
     }
 
     const fetchCards = async () => {
@@ -100,6 +114,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
                                 <Card { ...card } cardStyle={ position } key={ card.id }>
                                     <Button className="btn btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
                                     <Button className="btn btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
+                                    <Button className={switchBtnWordInfoClass()} onClick={() => switchShowWordInfo()}>Show details</Button>
                                 </Card>
                             </>
                         } else {
