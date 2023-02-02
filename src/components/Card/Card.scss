@@ -53,6 +53,7 @@
 }
 
 .prevCard {
+  display: none;
   left: calc(0% + 2rem);
   opacity: 0;
 }
@@ -63,6 +64,7 @@
 }
 
 .nextCard {
+  display: none;
   left: 100%;
   transform: translateX(calc(-100% - 2rem));
   opacity: 0;

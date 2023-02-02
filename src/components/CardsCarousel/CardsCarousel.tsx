@@ -5,25 +5,24 @@ import './CardsCarousel.scss';
 import Button from '../UI/Button/Button';
 import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromSubCollection';
 import { getAllByWord } from '../../words-api/words-api';
-import WordInfo from '../WordInfo/WordInfo';
-import {iWordInfo} from '../../types/word-info.type';
 
 interface CardsCarouselProps {
     activeUser: { [x: string]: string; };
     dictionary: { [x: string]: string; };
+    onCurrentWordChange: (data: any) => void;
+    className?: string;
 }
 
-const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
+const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurrentWordChange, className}) => {
     //todo: separate wordInfo data from this component, maybe create parent for both of them
     const [cards, setCards] = useState<iCard[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iCard>();
 
-    const [wordInfo, setWordInfo] = useState<iWordInfo>();
-    const [showWordInfo, setShowWordInfo] = useState(cards.length ? true : false);
-
     const prevBtn = useRef<HTMLElement>(null);
     const nextBtn = useRef<HTMLElement>(null);
+
+    const [isWordInfoShown, setWordInfoShown] = useState(false);
 
     const slideLeft = () => {
         if (cardIndex <= 0) {
@@ -54,19 +53,6 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
         }
     }
 
-    const switchShowWordInfo = () => {
-        if (!cards.length) {
-            setShowWordInfo(false);
-            return;
-        }
-
-        setShowWordInfo(!showWordInfo);
-    }
-
-    const switchBtnWordInfoClass = () => {
-        return showWordInfo ? 'btn-show-word-info' : 'btn-show-word-info-hidden';
-    }
-
     const fetchCards = async () => {
         const newData: iCard[] = await getCardsFromSubCollection('users', activeUser.id, dictionary.id);
         setCards(newData);
@@ -76,7 +62,8 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
     const fetchWordInfo = async (word: string) => {
         await getAllByWord(word).then(data => {
             console.log(data);
-            setWordInfo(data);
+            onCurrentWordChange(data);
+            // setWordInfo(data);
         });
     }
 
@@ -98,7 +85,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
     return (
         <>
             <div
-                className="carousel"
+                className={ `carousel${className ? '-'+className : ''}`}
                 onKeyDown={ handleKeyDown }
                 tabIndex={ 0 }
             >
@@ -114,7 +101,6 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
                                 <Card { ...card } cardStyle={ position } key={ card.id }>
                                     <Button className="btn btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
                                     <Button className="btn btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
-                                    <Button className={switchBtnWordInfoClass()} onClick={() => switchShowWordInfo()}>Show details</Button>
                                 </Card>
                             </>
                         } else {
@@ -123,9 +109,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser,dictionary}) => {
                     })}
                 </div>
             </div>
-            {
-                showWordInfo && wordInfo ? <WordInfo wordInfo={ wordInfo }></WordInfo> : null
-            }
+
         </>
     );
 }

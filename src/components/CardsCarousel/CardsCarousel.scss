@@ -1,16 +1,44 @@
+@keyframes rollout {
+  0% { transform: translate(-50%); }
+  100% { transform: translate(-80%); }
+}
+
+@keyframes slide-right-2 {
+  0% { width: 100px; }
+  100% { width: 800px; }
+}
+@keyframes slide-left {
+  0% { transform: translate(-50%); }
+  100% { transform: translate(0%); }
+}
+
 .carousel {
   position: absolute;
   top: 200px;
-  right: 5%;
+  //left: 50%;
+  transform: translate(-50%);
   display: flex;
   gap: 50px;
   justify-content: center;
   align-items: center;
+  animation: slide-left 1s reverse linear;
+
+  &-word-info-shown {
+    position: absolute;
+    top: 200px;
+    //left: 50%;
+    //transform: translate(-50%);
+    display: flex;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    animation: slide-right-2 2s;
+  }
 }
 
 .card-container {
   position: relative;
-  width: 81rem;
+  width: 50rem;
   height: 22rem;
 }
 
@@ -33,33 +61,4 @@
   &-blocked {
     background-color: grey;
   }
-
-  &-show-word-info {
-    position: absolute;
-    left: -30%;
-    top: 50%;
-    opacity: 0.3;
-    //position: absolute;
-    //right: 0px;
-
-    &-hidden {
-      opacity: 0.3;
-    }
-  }
 }
-
-//.btn-carousel {
-//
-//}
-//
-//.btn-prev {
-//  left: 20%;
-//}
-//
-//.btn-next {
-//  right: 20%;
-//}
-//
-//.btn-blocked {
-//
-//}
