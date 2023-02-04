@@ -1,38 +1,21 @@
-@keyframes rollout {
-  0% { transform: translate(-50%); }
-  100% { transform: translate(-80%); }
-}
-
-@keyframes slide-right-2 {
-  0% { width: 100px; }
-  100% { width: 800px; }
-}
-@keyframes slide-left {
-  0% { transform: translate(-50%); }
-  100% { transform: translate(0%); }
-}
-
 .carousel {
   position: absolute;
   top: 200px;
-  //left: 50%;
   transform: translate(-50%);
   display: flex;
   gap: 50px;
   justify-content: center;
   align-items: center;
-  animation: slide-left 1s reverse linear;
+  transition: 1s ease-in;
 
   &-word-info-shown {
     position: absolute;
     top: 200px;
-    //left: 50%;
-    //transform: translate(-50%);
     display: flex;
     gap: 50px;
     justify-content: center;
     align-items: center;
-    animation: slide-right-2 2s;
+    transition: 1s ease-in;
   }
 }
 

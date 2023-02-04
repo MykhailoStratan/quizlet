@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { iCard } from '../../types/card.type';
 import Card from '../Card/Card';
-import './CardsCarousel.scss';
 import Button from '../UI/Button/Button';
 import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromSubCollection';
 import { getAllByWord } from '../../words-api/words-api';
+import type { iCard } from '../../types/card.type';
+import './CardsCarousel.scss';
 
 interface CardsCarouselProps {
     activeUser: { [x: string]: string; };
@@ -57,6 +57,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
         const newData: iCard[] = await getCardsFromSubCollection('users', activeUser.id, dictionary.id);
         setCards(newData);
         setCurrentCard(newData[0]);
+        setCardIndex(0);
     }
 
     const fetchWordInfo = async (word: string) => {

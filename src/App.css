@@ -3,16 +3,3 @@
   margin: 0 auto;
   text-align: center;
 }
-
-.btn-show-word-info {
-  position: absolute;
-  left: 0px;
-  top: 0px;
-  border-radius: 0 0 20px 0 !important;
-}
-
-.btn-show-word-info-hidden {
-  position: absolute;
-  left: 35px;
-  top: 200px;
-}

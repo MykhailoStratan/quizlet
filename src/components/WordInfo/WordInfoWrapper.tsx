@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import './WordInfoWrapper.scss';
 
 interface WordInfoWrapperProps {
@@ -6,6 +6,7 @@ interface WordInfoWrapperProps {
 }
 
 const WordInfoWrapper: FC<WordInfoWrapperProps> = ({children}) => {
+
     return (
         <div className="word-info-wrapper">
             <div>{ children }</div>

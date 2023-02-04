@@ -1,27 +1,43 @@
-import { FC } from 'react';
-import { iWordInfo } from '../../types/word-info.type';
+import React, { FC, useState } from 'react';
+import type { iWordInfo } from '../../types/word-info.type';
+import Button from '../UI/Button/Button';
+import WordInfoWrapper from './WordInfoWrapper';
 import './WordInfo.scss';
 
 interface WordInfoProps {
     wordInfo: iWordInfo;
-    children?: any;
+    onShowWordInfoChange: (showWordInfoState: boolean) => void;
 }
 
-const WordInfo: FC<WordInfoProps> = ({wordInfo, children}) => {
-    return (
-        <div key={new Date().toISOString()} className="word-info">
-            <div>{ children }</div>
-            <ul>
-                <h2>General info:</h2>
-                <li><strong>{`Pronunciation:`}</strong> { wordInfo.pronunciation.all }</li>
-                <li><strong>{`Syllables:`}</strong> { wordInfo.syllables.list.join('-') }</li>
-                <li><strong>{`Frequency:`}</strong> { wordInfo.frequency }</li>
-            </ul>
+const WordInfo: FC<WordInfoProps> = ({ wordInfo, onShowWordInfoChange }) => {
+    const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
 
-            <ul>
-                <h2>Definitions:</h2>
-                { wordInfo.results.map((result, index) => {
-                        return <ul className="word-definition" key={ index }>
+    const switchShowWordInfo = () => {
+        setShowWordInfo(!showWordInfo);
+        onShowWordInfoChange(!showWordInfo);
+    };
+
+    const switchBtnWordInfoClass = () => {
+        return showWordInfo ? 'btn-show-word-info' : 'btn-show-word-info-hidden';
+    };
+
+    return (
+        !showWordInfo
+            ? <Button className={ switchBtnWordInfoClass() } onClick={ () => switchShowWordInfo() }>Show details</Button>
+            : <WordInfoWrapper>
+                <div key={new Date().toISOString()} className="word-info">
+                    <Button className={ switchBtnWordInfoClass() } onClick={ () => switchShowWordInfo() }>Show details</Button>
+                    <ul>
+                        <h2>General info:</h2>
+                        <li><strong>{`Pronunciation:`}</strong> { wordInfo.pronunciation.all }</li>
+                        <li><strong>{`Syllables:`}</strong> { wordInfo.syllables.list.join('-') }</li>
+                        <li><strong>{`Frequency:`}</strong> { wordInfo.frequency }</li>
+                    </ul>
+
+                    <ul>
+                        <h2>Definitions:</h2>
+                        { wordInfo.results.map((result, index) => {
+                            return <ul className="word-definition" key={ index }>
                                 <li>
                                     <h4 className="word-definition-head-span"><strong>{`- Definition:`}</strong></h4> <p>{`"${ result.definition }"`}</p>
                                 </li>
@@ -48,11 +64,12 @@ const WordInfo: FC<WordInfoProps> = ({wordInfo, children}) => {
                                     ? <li><span>{`Examples:`}</span> <span>{ result.examples.join(', ') }</span></li>
                                     : null
                                 }
-                        </ul>
-                    })
-                }
-            </ul>
-        </div>
+                            </ul>
+                        })
+                        }
+                    </ul>
+                </div>
+            </WordInfoWrapper>
     );
 }
 

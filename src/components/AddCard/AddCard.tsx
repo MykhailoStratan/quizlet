@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import Button from '../UI/Button/Button';
-import './AddCard.scss';
 import { addCardToDictionary } from '../../firebase/handlers/addCardToDictionary';
+import './AddCard.scss';
 
 interface FormElements extends HTMLFormControlsCollection {
     word: HTMLInputElement;
