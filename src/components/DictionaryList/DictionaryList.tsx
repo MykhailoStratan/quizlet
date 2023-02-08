@@ -1,5 +1,8 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import './DictionaryList.scss';
+import Button from '../UI/Button/Button';
+import Modal from '../UI/Modal/Modal';
+import AddDictionary from '../AddDictionary/AddDictionary';
 
 interface DictionaryListProps {
     dictionaries: { id: string, name: string }[],
@@ -7,14 +10,19 @@ interface DictionaryListProps {
 }
 
 const DictionaryList: FC<DictionaryListProps> = ({dictionaries, onDictionarySelect}) => {
+    const [showAddModal, setShowAddModal] = useState<boolean>(false);
+
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         onDictionarySelect(event.currentTarget.value);
-    }
+    };
+
+    const onAddDictionaryClick = () => {
+        return true;
+    };
 
     return (
       <div className="dictionary-list">
           <select
-              // onSelect={() => onDictionarySelect(dictionary)}
               onChange={ handleSelectChange }
           > // todo: create custom dropdown component
               {dictionaries.map(dictionary => {
@@ -26,7 +34,8 @@ const DictionaryList: FC<DictionaryListProps> = ({dictionaries, onDictionarySele
                   </option>
               })}
           </select>
-
+          <Button className={'btn-add-dictionary'} onClick={ () => setShowAddModal(true)}>+</Button>
+          { showAddModal ? <Modal onClick={() => setShowAddModal(false)}><AddDictionary></AddDictionary></Modal> : null }
       </div>
     );
 }

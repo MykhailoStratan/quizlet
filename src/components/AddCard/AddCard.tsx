@@ -3,6 +3,7 @@ import { v4 as uuid } from 'uuid';
 import Button from '../UI/Button/Button';
 import { addCardToDictionary } from '../../firebase/handlers/addCardToDictionary';
 import './AddCard.scss';
+import { iDictionary } from '../../types/dictionary.type';
 
 interface FormElements extends HTMLFormControlsCollection {
     word: HTMLInputElement;
@@ -14,10 +15,10 @@ interface AddCardFormElement extends HTMLFormElement {
 
 interface AddCardProps {
     activeUser: { [x: string]: string; };
-    dictionary: { [x: string]: string; };
+    dictionary: iDictionary;
 }
 
-const AddCard: FC<AddCardProps> = ({activeUser, dictionary}) => {
+const AddCard: FC<AddCardProps> = ({ activeUser, dictionary}) => {
     const [error, setError] = useState('');
 
     const handleSubmit = async (event: React.FormEvent<AddCardFormElement>) => {

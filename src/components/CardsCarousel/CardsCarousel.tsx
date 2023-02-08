@@ -5,10 +5,11 @@ import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromS
 import { getAllByWord } from '../../words-api/words-api';
 import type { iCard } from '../../types/card.type';
 import './CardsCarousel.scss';
+import { iDictionary } from '../../types/dictionary.type';
 
 interface CardsCarouselProps {
     activeUser: { [x: string]: string; };
-    dictionary: { [x: string]: string; };
+    dictionary: iDictionary;
     onCurrentWordChange: (data: any) => void;
     className?: string;
 }
