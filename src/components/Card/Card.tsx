@@ -1,8 +1,8 @@
 import { FC, useEffect, useState } from 'react';
-import { iCard } from '../../types/card.type';
+import { iWord } from '../../types/card.type';
 import './Card.scss';
 
-interface CardProps extends iCard {
+interface CardProps extends iWord {
     cardStyle: string;
     children?: any;
 }

@@ -1,8 +1,8 @@
-import { iCard } from '../types/card.type';
+import { iWord } from '../types/card.type';
 import { QueryDocumentSnapshot } from 'firebase/firestore';
 import { iDictionary } from '../types/dictionary.type';
 
-export const getCardsFromQuerySnapshot = (data: QueryDocumentSnapshot[]): iCard[] => {
+export const getCardsFromQuerySnapshot = (data: QueryDocumentSnapshot[]): iWord[] => {
     return data.map((document) => ({
         word: document.data().word,
         translation: document.data().translation,

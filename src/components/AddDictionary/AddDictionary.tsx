@@ -1,53 +1,59 @@
 import React, { FC, useEffect } from 'react';
 import Button from '../UI/Button/Button';
-import { addCardToDictionary } from '../../firebase/handlers/addCardToDictionary';
 import { v4 as uuid } from 'uuid';
-import { fetchSubCollection, postToSubCollection } from '../../firebase/actions';
 import './AddDictionary.scss';
-import { postToDictionary } from '../../firebase/handlers/postToDictionary';
+import { dictionaryService } from '../../services/dictionary/dictionary.service';
+import { iUser } from '../../types/user.type';
 
 interface FormElements extends HTMLFormControlsCollection {
-    word: HTMLInputElement;
-    translation: HTMLInputElement;
+    name: HTMLInputElement;
 }
-interface AddCardFormElement extends HTMLFormElement {
+interface AddDictionaryFormElement extends HTMLFormElement {
     readonly elements: FormElements;
 }
 
 type AddDictionaryProps = {
-    activeUser: {name: string, id: string};
+    currentUser: iUser;
 }
 
-const AddDictionary: FC = ({  }) => {
-    // const handleSubmit = async (event: React.FormEvent<AddCardFormElement>) => {
-    //     event.preventDefault();
-    //     let { dictionary } = event.currentTarget;
-    //
-    //     try {
-    //         const response = await addDictionary('users', activeUser.id, dictionary.id, {
-    //             word: word.value.trim(),
-    //             translation: translation.value.trim(),
-    //             id: uuid()
-    //         });
-    //
-    //         word.value = '';
-    //         translation.value = '';
-    //
-    //         response && setError(response);
-    //     } catch (error) {
-    //         console.log(error)
-    //         setError(`${error}`)
-    //     }
-    // }
+const AddDictionary: FC<AddDictionaryProps> = ({ currentUser }) => {
+    const handleSubmit = async (event: React.FormEvent<AddDictionaryFormElement>) => {
+        event.preventDefault();
+        let { name } = event.currentTarget;
+
+        try {
+            await dictionaryService.postDictionary(currentUser, {
+                name: name.value.trim(),
+                id: uuid(),
+                words:[]
+            });
+
+            // const response = await addDictionary('users', activeUser.id, dictionary.id, {
+            //     word: word.value.trim(),
+            //     translation: translation.value.trim(),
+            //     id: uuid()
+            // });
+
+            name.value = '';
+            // translation.value = '';
+
+            // response && setError(response);
+        } catch (error) {
+            console.log(error)
+            // setError(`${error}`)
+        }
+    }
     const createDictionary = async () => {
-        await postToDictionary('users', 'active_user_id_x1c2v3', 'dictionaries', {name: 'Dictionary-2',
-            id: 'dictionary_id_1', words: []});
+        await dictionaryService.postDictionary(currentUser, {name: 'Dictionary-12', id: uuid(), words:[]})
+        // await postToDictionary('users', 'active_user_id_x1c2v3', 'dictionaries', {name: 'Dictionary-2',
+        //     id: 'dictionary_id_1', words: []});
     }
 
-    const getDictionaries = async () => {
-        const result = await fetchSubCollection('users', 'active_user_id_x1c2v3', 'dictionaries');
-        console.log('getDictionaries', result);
-    }
+    // const getDictionaries = async () => {
+    //     await dictionaryService.getDictionaries()
+    //     const result = await fetchSubCollection('users', 'active_user_id_x1c2v3', 'dictionaries');
+    //     console.log('getDictionaries', result);
+    // }
 
     // useEffect(() => {
     //     (async () => {
@@ -60,17 +66,15 @@ const AddDictionary: FC = ({  }) => {
 
     return (
         <>
-            <form onClick={createDictionary}>
+            <form onSubmit={ handleSubmit }>
                 <div id="error" className="error">{}</div>
-                <label htmlFor="word">Enter English word:</label>
-                <input id="word" type="text" />
-                <label htmlFor="translation">Enter translation:</label>
-                <input id="translation" type="text" />
+                <label htmlFor="name">Enter Dictionary Name:</label>
+                <input id="name" type="text" />
                 <Button>Add</Button>
             </form>
 
-            <button onClick={getDictionaries}>Get Dictionaries</button>
-            <button onClick={getDictionaries}>Create Dictionary</button>
+            {/*<button onClick={getDictionaries}>Get Dictionaries</button>*/}
+            {/*<button onClick={getDictionaries}>Create Dictionary</button>*/}
         </>
 
     );

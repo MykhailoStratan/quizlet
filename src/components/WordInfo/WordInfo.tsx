@@ -6,11 +6,12 @@ import './WordInfo.scss';
 
 interface WordInfoProps {
     wordInfo: iWordInfo;
+    isShowWordInfo: boolean;
     onShowWordInfoChange: (showWordInfoState: boolean) => void;
 }
 
-const WordInfo: FC<WordInfoProps> = ({ wordInfo, onShowWordInfoChange }) => {
-    const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
+const WordInfo: FC<WordInfoProps> = ({ wordInfo, isShowWordInfo, onShowWordInfoChange }) => {
+    const [showWordInfo, setShowWordInfo] = useState<boolean>(isShowWordInfo);
 
     const switchShowWordInfo = () => {
         setShowWordInfo(!showWordInfo);
@@ -21,12 +22,14 @@ const WordInfo: FC<WordInfoProps> = ({ wordInfo, onShowWordInfoChange }) => {
         return showWordInfo ? 'btn-show-word-info' : 'btn-show-word-info-hidden';
     };
 
+
+
     return (
         !showWordInfo
             ? <Button className={ switchBtnWordInfoClass() } onClick={ () => switchShowWordInfo() }>Show details</Button>
             : <WordInfoWrapper>
                 <div key={new Date().toISOString()} className="word-info">
-                    <Button className={ switchBtnWordInfoClass() } onClick={ () => switchShowWordInfo() }>Show details</Button>
+                    <Button className={ switchBtnWordInfoClass() } onClick={ () => switchShowWordInfo() }>Hide details</Button>
                     <ul>
                         <h2>General info:</h2>
                         <li><strong>{`Pronunciation:`}</strong> { wordInfo.pronunciation.all }</li>

@@ -1,9 +1,11 @@
 import React, { FC, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 import Button from '../UI/Button/Button';
-import { addCardToDictionary } from '../../firebase/handlers/addCardToDictionary';
+// import { addCardToDictionary } from '../../firebase/handlers/addCardToDictionary';
 import './AddCard.scss';
 import { iDictionary } from '../../types/dictionary.type';
+import { dictionaryService } from '../../services/dictionary/dictionary.service';
+import { iUser } from '../../types/user.type';
 
 interface FormElements extends HTMLFormControlsCollection {
     word: HTMLInputElement;
@@ -14,7 +16,7 @@ interface AddCardFormElement extends HTMLFormElement {
 }
 
 interface AddCardProps {
-    activeUser: { [x: string]: string; };
+    activeUser: iUser;
     dictionary: iDictionary;
 }
 
@@ -26,7 +28,7 @@ const AddCard: FC<AddCardProps> = ({ activeUser, dictionary}) => {
         let { word, translation } = event.currentTarget;
 
         try {
-            const response = await addCardToDictionary('users', activeUser.id, dictionary.id, {
+            const response = await dictionaryService.addWordToDictionary(activeUser, dictionary, {
                 word: word.value.trim(),
                 translation: translation.value.trim(),
                 id: uuid()
@@ -34,6 +36,7 @@ const AddCard: FC<AddCardProps> = ({ activeUser, dictionary}) => {
 
             word.value = '';
             translation.value = '';
+            setError('');
 
             response && setError(response);
         } catch (error) {

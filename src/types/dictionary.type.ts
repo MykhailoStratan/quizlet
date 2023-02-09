@@ -1,7 +1,7 @@
-import { iCard } from './card.type';
+import { iWord } from './card.type';
 
 export type iDictionary = {
     id: string;
     name: string;
-    words: iCard[];
+    words: iWord[];
 }

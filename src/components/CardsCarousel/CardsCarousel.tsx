@@ -1,14 +1,17 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import Card from '../Card/Card';
 import Button from '../UI/Button/Button';
-import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromSubCollection';
+// import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromSubCollection';
 import { getAllByWord } from '../../words-api/words-api';
-import type { iCard } from '../../types/card.type';
+import type { iWord } from '../../types/card.type';
 import './CardsCarousel.scss';
 import { iDictionary } from '../../types/dictionary.type';
+import { iUser } from '../../types/user.type';
+import { firebaseActions } from '../../firebase/firebase.actions';
+import { dictionaryService } from '../../services/dictionary/dictionary.service';
 
 interface CardsCarouselProps {
-    activeUser: { [x: string]: string; };
+    activeUser: iUser;
     dictionary: iDictionary;
     onCurrentWordChange: (data: any) => void;
     className?: string;
@@ -16,9 +19,9 @@ interface CardsCarouselProps {
 
 const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurrentWordChange, className}) => {
     //todo: separate wordInfo data from this component, maybe create parent for both of them
-    const [cards, setCards] = useState<iCard[]>([]);
+    const [cards, setCards] = useState<iWord[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
-    const [currentCard, setCurrentCard] = useState<iCard>();
+    const [currentCard, setCurrentCard] = useState<iWord>();
 
     const prevBtn = useRef<HTMLElement>(null);
     const nextBtn = useRef<HTMLElement>(null);
@@ -55,15 +58,15 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
     }
 
     const fetchCards = async () => {
-        const newData: iCard[] = await getCardsFromSubCollection('users', activeUser.id, dictionary.id);
-        setCards(newData);
-        setCurrentCard(newData[0]);
+        // const newData: iWord[] = await getCardsFromSubCollection('users', activeUser.id, dictionary.id);
+        const dictionaryWords = await dictionaryService.getWordsFromDictionary(activeUser, dictionary);
+        setCards(dictionaryWords);
+        setCurrentCard(dictionaryWords[0]);
         setCardIndex(0);
     }
 
     const fetchWordInfo = async (word: string) => {
         await getAllByWord(word).then(data => {
-            console.log(data);
             onCurrentWordChange(data);
             // setWordInfo(data);
         });
@@ -73,8 +76,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
         (async () => {
             await fetchCards();
         })();
-
-    },[dictionary.id])
+    },[dictionary])
 
     useEffect(() => {
         (async () => {
@@ -99,12 +101,12 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
                                 ? "activeCard"
                                 : 'prevCard';
                         if (position === 'activeCard') {
-                            return <>
+                            return <div key={ card.id }>
                                 <Card { ...card } cardStyle={ position } key={ card.id }>
                                     <Button className="btn btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
                                     <Button className="btn btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
                                 </Card>
-                            </>
+                            </div>
                         } else {
                             return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }
