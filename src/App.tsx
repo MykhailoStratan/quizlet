@@ -21,12 +21,16 @@ const App: FC<AppProps> = ({user}) => {
     const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
 
     const [activeDictionary, setActiveDictionary] = useState<iDictionary>();
-    const [wordInfo, setWordInfo] = useState<iWordInfo>();
+    const [wordInfo, setWordInfo] = useState<iWordInfo | null>(null);
     const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
 
     const onSelectActiveDictionary = (dictionary: iDictionary) => {
         console.log(dictionary.name)
         setActiveDictionary(dictionary);
+
+        if (!dictionary.words.length) {
+            setWordInfo(null);
+        }
     };
 
     function onCurrentWordChange(wordData: iWordInfo) {

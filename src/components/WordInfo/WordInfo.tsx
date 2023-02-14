@@ -22,8 +22,7 @@ const WordInfo: FC<WordInfoProps> = ({ wordInfo, isShowWordInfo, onShowWordInfoC
         return showWordInfo ? 'btn-show-word-info' : 'btn-show-word-info-hidden';
     };
 
-
-
+    console.log('word-info', wordInfo);
     return (
         !showWordInfo
             ? <Button className={ switchBtnWordInfoClass() } onClick={ () => switchShowWordInfo() }>Show details</Button>
