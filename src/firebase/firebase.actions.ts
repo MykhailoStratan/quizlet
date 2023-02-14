@@ -23,17 +23,17 @@ class FirebaseActions {
         return collection(db, name);
     }
 
-    public async addDocument<T>(collectionName: string, payload: T) {
+    public async addDocument<T extends { [x: string]: any; }>(collectionName: string, payload: T) {
         const documentRef = await addDoc(collection(db, collectionName), payload);
         console.log("Document written with ID: ", documentRef.id);
     }
 
-    public async updateDocument<T>(collectionName: string, documentName: string, payload: T): Promise<void> {
+    public async updateDocument<T extends { [x: string]: any; }>(collectionName: string, documentName: string, payload: T): Promise<void> {
         const documentRef = doc(db, collectionName, documentName);
         await updateDoc(documentRef, payload);
     }
 
-    public async getDocument<T>(collectionName: string, documentName: string): Promise<DocumentData> {
+    public async getDocument<T>(collectionName: string, documentName: string): Promise<DocumentData | undefined> {
         const documentRef = doc(db, collectionName, documentName); // todo: Add Converter here to define data type
         const documentSnap = await getDoc(documentRef);
         // let documentData: T;
@@ -44,6 +44,7 @@ class FirebaseActions {
         } else {
             // doc.data() will be undefined in this case
             console.log("No such document!");
+            return;
         }
     }
 
@@ -52,12 +53,15 @@ class FirebaseActions {
         const collectionData: T[] = [];
         try {
             const collectionQuerySnapshot = await getDocs(collectionRef);
+            // todo: fix
+            // @ts-ignore
             collectionQuerySnapshot.forEach(doc => collectionData.push({...doc.data(), firebaseId: doc.id}));
 
             return collectionData;
         } catch (error) {
             console.log(error);
         }
+        return collectionData;
     }
     //
     // public async fetchCollection(collectionName: string): Promise<QueryDocumentSnapshot[]> {

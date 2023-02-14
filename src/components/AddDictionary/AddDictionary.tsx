@@ -22,7 +22,9 @@ const AddDictionary: FC<AddDictionaryProps> = ({ currentUser }) => {
         let { name } = event.currentTarget;
 
         try {
-            await dictionaryService.postDictionary(currentUser, {
+            await dictionaryService.postDictionary( {
+                // @ts-ignore works as expected
+                // todo: find out why did this warning appear
                 name: name.value.trim(),
                 id: uuid(),
                 words:[]
@@ -43,11 +45,11 @@ const AddDictionary: FC<AddDictionaryProps> = ({ currentUser }) => {
             // setError(`${error}`)
         }
     }
-    const createDictionary = async () => {
-        await dictionaryService.postDictionary(currentUser, {name: 'Dictionary-12', id: uuid(), words:[]})
-        // await postToDictionary('users', 'active_user_id_x1c2v3', 'dictionaries', {name: 'Dictionary-2',
-        //     id: 'dictionary_id_1', words: []});
-    }
+    // const createDictionary = async () => {
+    //     await dictionaryService.postDictionary({name: 'Dictionary-12', id: uuid(), words:[]})
+    //     // await postToDictionary('users', 'active_user_id_x1c2v3', 'dictionaries', {name: 'Dictionary-2',
+    //     //     id: 'dictionary_id_1', words: []});
+    // }
 
     // const getDictionaries = async () => {
     //     await dictionaryService.getDictionaries()

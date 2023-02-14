@@ -1,5 +1,5 @@
 .modal-ui {
-
+  z-index: 100;
 }
 
 .modal-background {
@@ -10,6 +10,5 @@
   width: 100%;
   background-color: rgba(110, 110, 110, 0.4);
   backdrop-filter: blur(15px);
-  opacity: 0.3;
   z-index: 99;
 }

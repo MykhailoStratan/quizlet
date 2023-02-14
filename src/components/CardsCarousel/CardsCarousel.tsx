@@ -1,13 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import Card from '../Card/Card';
 import Button from '../UI/Button/Button';
-// import { getCardsFromSubCollection } from '../../firebase/handlers/getCardsFromSubCollection';
 import { getAllByWord } from '../../words-api/words-api';
 import type { iWord } from '../../types/card.type';
 import './CardsCarousel.scss';
 import { iDictionary } from '../../types/dictionary.type';
 import { iUser } from '../../types/user.type';
-import { firebaseActions } from '../../firebase/firebase.actions';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
 
 interface CardsCarouselProps {
@@ -25,8 +23,6 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
 
     const prevBtn = useRef<HTMLElement>(null);
     const nextBtn = useRef<HTMLElement>(null);
-
-    const [isWordInfoShown, setWordInfoShown] = useState(false);
 
     const slideLeft = () => {
         if (cardIndex <= 0) {
@@ -57,24 +53,18 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
         }
     }
 
-    const fetchCards = async () => {
-        // const newData: iWord[] = await getCardsFromSubCollection('users', activeUser.id, dictionary.id);
-        const dictionaryWords = await dictionaryService.getWordsFromDictionary(activeUser, dictionary);
-        setCards(dictionaryWords);
-        setCurrentCard(dictionaryWords[0]);
-        setCardIndex(0);
-    }
-
     const fetchWordInfo = async (word: string) => {
         await getAllByWord(word).then(data => {
             onCurrentWordChange(data);
-            // setWordInfo(data);
         });
     }
 
     useEffect(() => {
         (async () => {
-            await fetchCards();
+            const words = await dictionaryService.getWordsFromDictionary(dictionary);
+            setCards(words);
+            setCurrentCard(words[0]);
+            setCardIndex(0);
         })();
     },[dictionary])
 
@@ -113,7 +103,6 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
                     })}
                 </div>
             </div>
-
         </>
     );
 }

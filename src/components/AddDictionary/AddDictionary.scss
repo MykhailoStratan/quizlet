@@ -1,5 +1,5 @@
 form {
-  position: absolute;
+  position: fixed;
   top: 200px;
   left: 50%;
   transform: translate(-50%);
@@ -16,6 +16,7 @@ form {
 label, input {
   //display: block;
   margin-bottom: 15px;
+  color: black;
 }
 
 input {

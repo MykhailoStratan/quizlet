@@ -46,7 +46,7 @@ const AddCard: FC<AddCardProps> = ({ activeUser, dictionary}) => {
     }
 
     return(
-        <form onSubmit={ handleSubmit }>
+        <form className="add-card-form" onSubmit={ handleSubmit }>
             {error && <div id="error" className="error">{error}</div>}
             <label htmlFor="word">Enter English word:</label>
             <input id="word" type="text" />

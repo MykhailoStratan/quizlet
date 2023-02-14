@@ -1,9 +1,9 @@
-import { FC, useState } from 'react';
+import React, { FC, useState } from 'react';
 import './Modal.scss';
 
 type ModalProps = {
     children?: any;
-    onClick: () => void;
+    onClick: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const Modal: FC<ModalProps> = ({ children, onClick }) => {
@@ -12,9 +12,17 @@ const Modal: FC<ModalProps> = ({ children, onClick }) => {
     // const closeOnBackgroundCLick = () => {
     //     setVisible(false);
     // };
+    const closeModal = (event: React.MouseEvent<HTMLDivElement>) => {
+        event.stopPropagation();
+        onClick(event);
+    }
 
     return (
-        <div className="modal-background" onClick={ onClick }><div className="modal-ui">{ children }</div></div>
+        <>
+            <div className="modal-background" onClick={ closeModal }></div>
+            <div className="modal-ui">{ children }</div>
+        </>
+
     );
 }
 
