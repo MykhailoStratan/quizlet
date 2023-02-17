@@ -9,8 +9,9 @@ class AuthService {
         try {
             userCredential = await createUserWithEmailAndPassword(this.auth, email, password)
         } catch(error: any) {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            throw new Error(error);
         }
 
         console.log('credential', userCredential);
@@ -24,8 +25,9 @@ class AuthService {
         try {
             userCredential = await signInWithEmailAndPassword(this.auth, email, password)
         } catch(error: any) {
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            // const errorCode = error.code;
+            // const errorMessage = error.message;
+            throw new Error(error);
         }
 
         console.log('credential', userCredential);

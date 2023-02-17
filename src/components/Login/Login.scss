@@ -1,0 +1,21 @@
+.login-switch-btn-wrapper {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  top: 150px;
+  left: 50%;
+  transform: translate(-50%);
+  width: 400px;
+
+
+}
+
+.login-switch-btn {
+  width: 100px;
+
+  &-active {
+    width: 100px;
+    background-color: #8875ef;
+  }
+}

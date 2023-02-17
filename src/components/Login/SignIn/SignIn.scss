@@ -1,0 +1,12 @@
+.signin-form {
+
+  & label {
+    color: white;
+  }
+
+  &-error {
+    color: red;
+    background-color: #2d2d2d;
+    margin: 0 50px;
+  }
+}

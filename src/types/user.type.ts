@@ -5,4 +5,5 @@ export type iUser = {
     id: string,
     firebaseId: string,
     dictionaries: iDictionary[],
+    email: string,
 }

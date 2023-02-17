@@ -21,9 +21,7 @@ class DictionaryService {
             doc(db, 'users', this.currentUser.firebaseId),
             { includeMetadataChanges: true },
             (doc) => {
-                console.log(doc.data());
                 this.dictionaries = doc.data()?.dictionaries;
-                console.log('init:',this.dictionaries);
 
                 if (dictionariesCb) {
                     dictionariesCb(doc.data()?.dictionaries);

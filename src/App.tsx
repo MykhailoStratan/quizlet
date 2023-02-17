@@ -6,6 +6,7 @@ import AddCard from './components/AddCard/AddCard';
 import React, { FC, useEffect, useState } from 'react';
 import DictionaryList from './components/DictionaryList/DictionaryList';
 import WordInfo from './components/WordInfo/WordInfo';
+import Login from './components/Login/Login';
 import { iWordInfo } from './types/word-info.type';
 import { iDictionary } from './types/dictionary.type';
 import { iUser } from './types/user.type';
@@ -16,7 +17,7 @@ type AppProps = {
 }
 
 const App: FC<AppProps> = ({user}) => {
-    const menu = [ 'Home', 'Learn', 'Add New Words' ];
+    const menu = [ 'Home', 'Learn', 'Add New Words', 'Login' ];
     const [activeUser, setActiveUser] = useState<iUser>();
     const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
 
@@ -87,6 +88,7 @@ const App: FC<AppProps> = ({user}) => {
                             </>
                             : null
                     }/>
+                    <Route path="/login" element={ <Login/> } />
                 </Routes>
             </Router>
         </div>
