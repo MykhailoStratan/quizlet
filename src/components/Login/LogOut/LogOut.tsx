@@ -9,9 +9,6 @@ const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) =
     const onLogOut = () => {
         authService.logOut();
         setIsLogged(false);
-        // setUser(null);
-        // setDisplayOption(DISPLAY_OPTIONS.SIGN_IN);
-        // setIsLogged(false);
     }
 
     return (
