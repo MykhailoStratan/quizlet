@@ -4,7 +4,7 @@ import Button from '../../UI/Button/Button';
 import { usersService } from '../../../services/users/users.service';
 import { authService } from '../../../services/auth/auth.service';
 
-const LogOut: FC<{setIsLogged: (boolean) => void}> = ({setIsLogged}) => {
+const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) => {
 
     const onLogOut = () => {
         authService.logOut();

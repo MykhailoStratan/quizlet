@@ -6,12 +6,13 @@ import { dictionaryService } from './services/dictionary/dictionary.service';
 import { firebaseActions } from './firebase/firebase.actions';
 import { usersService } from './services/users/users.service';
 
-await usersService.initialize();
+(async () => {
+    await usersService.initialize();
+    await dictionaryService.initialize(firebaseActions);
 
-await dictionaryService.initialize(firebaseActions, usersService.getActiveUser());
-
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
-    <App></App>
-  </React.StrictMode>,
-)
+    ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+        <React.StrictMode>
+            <App></App>
+        </React.StrictMode>,
+    )
+})();

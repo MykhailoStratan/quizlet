@@ -1,13 +1,10 @@
 import { iUser } from '../../types/user.type';
 import { firebaseActions } from '../../firebase/firebase.actions';
-import { collection, doc, onSnapshot, query } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
 import { v4 as uuid } from 'uuid';
 
 class UsersService {
     private users: iUser[] = [];
-    private activeUser: iUser | null;
-    private subscription;
+    private activeUser: iUser | null = null;
 
     private validateUser(user: iUser) {
         if (user.name
@@ -33,10 +30,8 @@ class UsersService {
         return this.users;
     }
 
-    public getActiveUser(): iUser {
-        if (this.activeUser) {
-            return this.activeUser;
-        }
+    public getActiveUser(): iUser | null {
+        return this.activeUser;
     }
 
     public setActiveUserByEmail(userEmail: string) {
@@ -56,7 +51,6 @@ class UsersService {
             return;
         }
 
-        await this.updateUsers();
         const isUserExist = this.users.find(existedUser => existedUser.email === user.email );
 
         if (isUserExist) {
@@ -70,24 +64,26 @@ class UsersService {
         });
 
         await firebaseActions.addDocument('users', user);
+        await this.updateUsers();
     }
 
-    public async subscribeToUsers(activeUserSetter?: Function) {
-        const collectionQuery = query(collection(db, "cities"));
-        this.subscription = onSnapshot(
-            collectionQuery,
-            { includeMetadataChanges: true },
-            (querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    this.users.push(doc as iUser)
-                });
-
-                if (activeUserSetter) {
-                    activeUserSetter(this.getActiveUser());
-                }
-            });
-        return this.subscription;
-    }
+    // public async subscribeToUsers(activeUserSetter?: Function) {
+    //     const collectionQuery = query(collection(db, "cities")).withConverter(userConverter);
+    //     const subscription = onSnapshot(
+    //         collectionQuery,
+    //         { includeMetadataChanges: true },
+    //         (querySnapshot) => {
+    //             querySnapshot.forEach((doc) => {
+    //                 console.log(doc)
+    //                 this.users.push(doc)
+    //             });
+    //
+    //             if (activeUserSetter) {
+    //                 activeUserSetter(this.getActiveUser());
+    //             }
+    //         });
+    //     return subscription;
+    // }
 
     public clearUsers() {
         this.users = [];

@@ -34,6 +34,7 @@ const SignUp: FC = () => {
         }
 
         await usersService.addUser({
+            // @ts-ignore
             name: name.value,
             email: email.value,
             id: uuid(),
@@ -43,6 +44,7 @@ const SignUp: FC = () => {
 
         email.value = '';
         password.value = '';
+        // @ts-ignore
         name.value = '';
     }
 

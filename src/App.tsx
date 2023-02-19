@@ -47,7 +47,8 @@ const App: FC = () => {
 
     useEffect(() => {
         (async () => {
-            const activeUserSubscription = await usersService.subscribeToUsers();
+            // const activeUserSubscription = await usersService.subscribeToUsers();
+            await usersService.updateUsers();
 
             setMenu(getMenuOptions());
         })();

@@ -20,47 +20,17 @@ const AddDictionary: FC = () => {
         try {
             await dictionaryService.postDictionary( {
                 // @ts-ignore works as expected
-                // todo: find out why did this warning appear
                 name: name.value.trim(),
                 id: uuid(),
                 words:[]
             });
-
-            // const response = await addDictionary('users', activeUser.id, dictionary.id, {
-            //     word: word.value.trim(),
-            //     translation: translation.value.trim(),
-            //     id: uuid()
-            // });
-
+            // @ts-ignore works as expected
             name.value = '';
-            // translation.value = '';
-
-            // response && setError(response);
         } catch (error) {
             console.log(error)
             // setError(`${error}`)
         }
     }
-    // const createDictionary = async () => {
-    //     await dictionaryService.postDictionary({name: 'Dictionary-12', id: uuid(), words:[]})
-    //     // await postToDictionary('users', 'active_user_id_x1c2v3', 'dictionaries', {name: 'Dictionary-2',
-    //     //     id: 'dictionary_id_1', words: []});
-    // }
-
-    // const getDictionaries = async () => {
-    //     await dictionaryService.getDictionaries()
-    //     const result = await fetchSubCollection('users', 'active_user_id_x1c2v3', 'dictionaries');
-    //     console.log('getDictionaries', result);
-    // }
-
-    // useEffect(() => {
-    //     (async () => {
-    //             await postToSubCollection('users', activeUser.id, 'dictionaries', {name: 'Dictionary-1',
-    //             id: 'dictionary_id_1',});
-    //
-    //     })();
-    //
-    // },[])
 
     return (
         <>
@@ -70,9 +40,6 @@ const AddDictionary: FC = () => {
                 <input id="name" type="text" />
                 <Button>Add</Button>
             </form>
-
-            {/*<button onClick={getDictionaries}>Get Dictionaries</button>*/}
-            {/*<button onClick={getDictionaries}>Create Dictionary</button>*/}
         </>
 
     );

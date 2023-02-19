@@ -10,13 +10,16 @@ const DISPLAY_OPTIONS = {
     SIGN_UP: 'signup',
 };
 
-const Login: FC<{setIsLogged: (boolean) => void}> = ({setIsLogged}) => {
+interface LoginProps {
+    setIsLogged: (newState: boolean) => void;
+}
+
+const Login: FC<LoginProps> = ({setIsLogged}) => {
     const [displayOption, setDisplayOption] = useState(DISPLAY_OPTIONS.SIGN_IN);
 
     const onUserData = (userResponseData: any) => {
         setIsLogged(true);
         usersService.setActiveUserByEmail(userResponseData.email);
-        setDisplayOption(null);
     }
 
     return (

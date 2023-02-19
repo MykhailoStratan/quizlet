@@ -19,8 +19,8 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iWord>();
 
-    const prevBtn = useRef<HTMLElement>(null);
-    const nextBtn = useRef<HTMLElement>(null);
+    const prevBtn = useRef<HTMLElement | null>(null);
+    const nextBtn = useRef<HTMLElement | null>(null);
 
     const slideLeft = () => {
         if (cardIndex <= 0) {
@@ -60,9 +60,11 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     useEffect(() => {
         (async () => {
             const words = await dictionaryService.getWordsFromDictionary(dictionary);
-            setCards(words);
-            setCurrentCard(words[0]);
-            setCardIndex(0);
+            if (words?.length) {
+                setCards(words);
+                setCurrentCard(words[0]);
+                setCardIndex(0);
+            }
         })();
     },[dictionary])
 
