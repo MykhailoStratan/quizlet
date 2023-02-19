@@ -9,30 +9,31 @@ import WordInfo from './components/WordInfo/WordInfo';
 import Login from './components/Login/Login';
 import { iWordInfo } from './types/word-info.type';
 import { iDictionary } from './types/dictionary.type';
-import { iUser } from './types/user.type';
-import { dictionaryService } from './services/dictionary/dictionary.service';
+import { usersService } from './services/users/users.service';
+import LogOut from './components/Login/LogOut/LogOut';
 
-type AppProps = {
-    user: iUser;
-}
+const defaultMenu = [ 'Home', 'Learn', 'Add New Words' ];
 
-const App: FC<AppProps> = ({user}) => {
-    const menu = [ 'Home', 'Learn', 'Add New Words', 'Login' ];
-    const [activeUser, setActiveUser] = useState<iUser>();
-    const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
+const App: FC = () => {
+    const [menu, setMenu] = useState(defaultMenu);
+    const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'));
 
     const [activeDictionary, setActiveDictionary] = useState<iDictionary>();
     const [wordInfo, setWordInfo] = useState<iWordInfo | null>(null);
     const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
 
     const onSelectActiveDictionary = (dictionary: iDictionary) => {
-        console.log(dictionary.name)
         setActiveDictionary(dictionary);
 
         if (!dictionary.words.length) {
             setWordInfo(null);
         }
     };
+
+    const getMenuOptions = () => {
+        const result = usersService.getActiveUser() ? defaultMenu : ['Home', 'Login'];
+        return result;
+    }
 
     function onCurrentWordChange(wordData: iWordInfo) {
         if (wordData) {
@@ -45,15 +46,15 @@ const App: FC<AppProps> = ({user}) => {
     }
 
     useEffect(() => {
-        setActiveUser(user);
         (async () => {
-            const subscription = await dictionaryService.subscribeToDictionaries(setDictionaries);
-            // subscription();
+            const activeUserSubscription = await usersService.subscribeToUsers();
+
+            setMenu(getMenuOptions());
         })();
 
-        setActiveDictionary(user.dictionaries[0]);
+        setActiveDictionary(usersService.getActiveUser()?.dictionaries[0]);
 
-    },[])
+    },[isLogged])
 
     return (
         <div className="App">
@@ -63,11 +64,10 @@ const App: FC<AppProps> = ({user}) => {
                     <Route path="/" element={ <div style={{ fontSize: '100px' }}>Welcome to Quizlet!</div> } />
                     <Route path="/home" element={ <div style={{ fontSize: '100px' }}>Welcome to Quizlet!</div> } />
                     <Route path="/learn" element={
-                        activeDictionary && activeUser
+                        activeDictionary
                             ? <>
-                                <DictionaryList onDictionarySelect={ onSelectActiveDictionary } currentUser={ activeUser } dictionaries={ dictionaries }/>
+                                <DictionaryList onDictionarySelect={ onSelectActiveDictionary } />
                                 <CardsCarousel
-                                    activeUser={ activeUser }
                                     dictionary={ activeDictionary }
                                     onCurrentWordChange={ onCurrentWordChange }
                                     className={ showWordInfo ? 'word-info-shown' : '' }
@@ -81,15 +81,18 @@ const App: FC<AppProps> = ({user}) => {
                             : null
                     }/>
                     <Route path="/add-new-words" element={
-                        activeDictionary && activeUser
+                        activeDictionary
                             ? <>
-                                <DictionaryList onDictionarySelect={ onSelectActiveDictionary } currentUser={ activeUser } dictionaries={ dictionaries }/>
-                                <AddCard activeUser={ activeUser } dictionary={ activeDictionary } />
+                                <DictionaryList onDictionarySelect={ onSelectActiveDictionary } />
+                                <AddCard dictionary={ activeDictionary } />
                             </>
                             : null
                     }/>
-                    <Route path="/login" element={ <Login/> } />
+                    <Route path="/login" element={
+                            !isLogged ? <Login setIsLogged={ setIsLogged }/> : null
+                        } />
                 </Routes>
+                { isLogged ? <LogOut setIsLogged={ setIsLogged }/> : null }
             </Router>
         </div>
     );

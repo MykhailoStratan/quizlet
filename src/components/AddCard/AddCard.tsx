@@ -16,11 +16,10 @@ interface AddCardFormElement extends HTMLFormElement {
 }
 
 interface AddCardProps {
-    activeUser: iUser;
     dictionary: iDictionary;
 }
 
-const AddCard: FC<AddCardProps> = ({ activeUser, dictionary}) => {
+const AddCard: FC<AddCardProps> = ({dictionary}) => {
     const [error, setError] = useState('');
 
     const handleSubmit = async (event: React.FormEvent<AddCardFormElement>) => {
@@ -28,7 +27,7 @@ const AddCard: FC<AddCardProps> = ({ activeUser, dictionary}) => {
         let { word, translation } = event.currentTarget;
 
         try {
-            const response = await dictionaryService.addWordToDictionary(activeUser, dictionary, {
+            const response = await dictionaryService.addWordToDictionary(dictionary, {
                 word: word.value.trim(),
                 translation: translation.value.trim(),
                 id: uuid()

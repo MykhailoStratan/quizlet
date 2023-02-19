@@ -27,10 +27,10 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
     return (
         <div className="menu">
             <ul>
-                {menu.map(option => {
+                { menu.map(option => {
                     return <Link
-                        to={'/' + option.name.toLowerCase().replaceAll(' ', '-')}
-                        key={option.id}
+                        to={ '/' + option.name.toLowerCase().replaceAll(' ', '-') }
+                        key={ option.id }
                     >
                         <li
                             key={ option.id }
@@ -41,7 +41,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
                         >{ option.name }</Button>
                         </li>
                     </Link>
-                })}
+                }) }
             </ul>
         </div>
     );

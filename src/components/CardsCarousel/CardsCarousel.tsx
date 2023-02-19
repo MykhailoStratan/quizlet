@@ -5,17 +5,15 @@ import { getAllByWord } from '../../words-api/words-api';
 import type { iWord } from '../../types/card.type';
 import './CardsCarousel.scss';
 import { iDictionary } from '../../types/dictionary.type';
-import { iUser } from '../../types/user.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
 
 interface CardsCarouselProps {
-    activeUser: iUser;
     dictionary: iDictionary;
     onCurrentWordChange: (data: any) => void;
     className?: string;
 }
 
-const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurrentWordChange, className}) => {
+const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange, className}) => {
     //todo: separate wordInfo data from this component, maybe create parent for both of them
     const [cards, setCards] = useState<iWord[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
@@ -83,7 +81,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
                 onKeyDown={ handleKeyDown }
                 tabIndex={ 0 }
             >
-                <div className="card-container">
+                { cards.length? <div className="card-container">
                     { cards.map((card, index) => {
                         let position = (index > cardIndex)
                             ? "nextCard"
@@ -100,8 +98,8 @@ const CardsCarousel: FC<CardsCarouselProps> = ({activeUser, dictionary, onCurren
                         } else {
                             return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }
-                    })}
-                </div>
+                    }) }
+                </div> : null }
             </div>
         </>
     );

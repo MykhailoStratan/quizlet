@@ -9,40 +9,31 @@ import { iDictionary } from '../../types/dictionary.type';
 
 interface DictionaryListProps {
     onDictionarySelect: (dictionary: iDictionary) => void,
-    currentUser: iUser,
-    dictionaries: iDictionary[],
 }
 
-const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, currentUser, dictionaries}) => {
-    // const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
+const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
+    const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const currentDictionary = dictionaries.find(dictionary => dictionary.name === event.currentTarget.value);
-        console.log(dictionaries)
-        console.log(event.currentTarget)
+
         if (currentDictionary) {
             onDictionarySelect(currentDictionary);
         }
     };
 
-    const onModalClick = (event:  React.MouseEvent<HTMLDivElement>) => {
+    const onModalClick = async (event:  React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
-        console.log(event.currentTarget)
         setShowAddModal(false);
+        setDictionaries(await dictionaryService.getDictionaries());
     };
 
-    // async function updateDictionaries() {
-    //     const dictionaries = await dictionaryService.getDictionaries(currentUser);
-    //     setDictionaries(dictionaries);
-    // }
-
-    // useEffect(() => {
-    //     // (async () => {
-    //     //     await updateDictionaries();
-    //     // })();
-    //     setDictionaries(currentUser.dictionaries);
-    // }, [currentUser.dictionaries.length])
+    useEffect(() => {
+        (async () => {
+            setDictionaries(await dictionaryService.getDictionaries());
+        })();
+    }, [])
 
     return (
       <div className="dictionary-list">
@@ -59,7 +50,7 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, currentUs
               }) }
           </select>
           <Button className={'btn-add-dictionary'} onClick={ () => setShowAddModal(true) }>+</Button>
-          { showAddModal ? <Modal onClick={ onModalClick }><AddDictionary currentUser={ currentUser }></AddDictionary></Modal> : null }
+          { showAddModal ? <Modal onClick={ onModalClick }><AddDictionary></AddDictionary></Modal> : null }
       </div>
     );
 }

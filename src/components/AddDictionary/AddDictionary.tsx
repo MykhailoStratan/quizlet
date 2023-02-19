@@ -3,7 +3,6 @@ import Button from '../UI/Button/Button';
 import { v4 as uuid } from 'uuid';
 import './AddDictionary.scss';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
-import { iUser } from '../../types/user.type';
 
 interface FormElements extends HTMLFormControlsCollection {
     name: HTMLInputElement;
@@ -12,11 +11,8 @@ interface AddDictionaryFormElement extends HTMLFormElement {
     readonly elements: FormElements;
 }
 
-type AddDictionaryProps = {
-    currentUser: iUser;
-}
 
-const AddDictionary: FC<AddDictionaryProps> = ({ currentUser }) => {
+const AddDictionary: FC = () => {
     const handleSubmit = async (event: React.FormEvent<AddDictionaryFormElement>) => {
         event.preventDefault();
         let { name } = event.currentTarget;

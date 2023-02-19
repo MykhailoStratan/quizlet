@@ -1,4 +1,5 @@
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+import { usersService } from '../users/users.service';
 
 class AuthService {
     private auth = getAuth();
@@ -14,12 +15,12 @@ class AuthService {
             throw new Error(error);
         }
 
-        console.log('credential', userCredential);
-
+        localStorage.setItem('user', JSON.stringify(userCredential.user));
         return userCredential;
     }
 
     public async signIn(email: string, password: string) {
+        await usersService.updateUsers();
         let userCredential;
 
         try {
@@ -30,9 +31,13 @@ class AuthService {
             throw new Error(error);
         }
 
-        console.log('credential', userCredential);
-
+        localStorage.setItem('user', JSON.stringify(userCredential.user));
         return userCredential;
+    }
+
+    public logOut() {
+        localStorage.clear();
+        usersService.clearUsers();
     }
 
 }

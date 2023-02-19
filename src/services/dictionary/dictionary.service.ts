@@ -3,22 +3,21 @@ import { iDictionary } from '../../types/dictionary.type';
 import { iUser } from '../../types/user.type';
 import { arrayUnion, doc, onSnapshot, Unsubscribe } from 'firebase/firestore';
 import { db } from '../../firebase/firebase';
+import { usersService } from '../users/users.service';
 
 class DictionaryService {
     private subscription: Unsubscribe | undefined;
     private db: any;
-    private currentUser!: iUser;
     private dictionaries: iDictionary[] = [];
 
-    public async initialize(databaseActions: any, currentUser: iUser): Promise<void> {
+    public async initialize(databaseActions: any): Promise<void> {
         this.db = databaseActions;
-        this.currentUser = currentUser;
         // await this.subscribeToDictionaries();
     }
 
     public async subscribeToDictionaries(dictionariesCb?: Function) {
         this.subscription = onSnapshot(
-            doc(db, 'users', this.currentUser.firebaseId),
+            doc(db, 'users', usersService.getActiveUser().firebaseId),
             { includeMetadataChanges: true },
             (doc) => {
                 this.dictionaries = doc.data()?.dictionaries;
@@ -35,7 +34,8 @@ class DictionaryService {
         const isDictionaryExist = existedDictionaries.find(dictionary => dictionary.name === payload.name);
 
         if (isDictionaryExist) {
-            return console.log(`Dictionary "${payload.name}" already exist for the current user!`);
+            console.log(`Dictionary "${payload.name}" already exist for the current user!`);
+            return;
         }
 
         const newData = existedDictionaries?.length
@@ -44,29 +44,28 @@ class DictionaryService {
 
         // @ts-ignore
         // todo: try to fix this warning
-        await this.db.updateDocument<{dictionaries: iDictionary[]}>('users', this.currentUser.firebaseId, {
+        await this.db.updateDocument<{dictionaries: iDictionary[]}>('users', usersService.getActiveUser().firebaseId, {
             dictionaries: newData,
         });
     }
 
     public async getDictionaries(): Promise<iDictionary[]> {
-        const { dictionaries } = await this.db.getDocument('users', this.currentUser.firebaseId);
+        const { dictionaries } = await this.db.getDocument('users', usersService.getActiveUser().firebaseId);
         return dictionaries;
     }
 
-    public async addWordToDictionary(userData: iUser, currentDictionary: iDictionary, newWord: iWord) {
+    public async addWordToDictionary(currentDictionary: iDictionary, newWord: iWord) {
         const existedDictionaries = await this.getDictionaries();
         const dictionaryIndex = existedDictionaries.findIndex(dictionary => dictionary.id === currentDictionary.id);
 
         if (existedDictionaries[dictionaryIndex].words.some(item => item.word === newWord.word)) {
             const error = `Word "${newWord.word}" already exist in the current dictionary!`;
-            console.log(error);
             return error;
         } else {
             existedDictionaries[dictionaryIndex].words.push(newWord);
         }
 
-        await this.db.updateDocument('users', userData.firebaseId, {
+        await this.db.updateDocument('users', usersService.getActiveUser().firebaseId, {
             dictionaries: [...existedDictionaries]
         });
     }
@@ -74,8 +73,10 @@ class DictionaryService {
     public async getWordsFromDictionary(currentDictionary: iDictionary) {
         const existedDictionaries = await this.getDictionaries();
         const dictionaryIndex = existedDictionaries.findIndex(dictionary => dictionary.id === currentDictionary.id);
-        console.log(existedDictionaries)
-        return existedDictionaries[dictionaryIndex].words;
+
+        if (existedDictionaries[dictionaryIndex].words.length) {
+            return existedDictionaries[dictionaryIndex].words;
+        }
     }
 }
 
