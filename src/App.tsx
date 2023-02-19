@@ -59,7 +59,7 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <Router>
+            <Router basename="/quizlet">
                 <Menu menuOptions={ menu }></Menu>
                 <Routes>
                     <Route path="/" element={ <div style={{ fontSize: '100px' }}>Welcome to Quizlet!</div> } />
