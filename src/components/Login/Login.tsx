@@ -2,8 +2,8 @@ import React, { FC, useState } from 'react';
 import Button from '../UI/Button/Button';
 import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
-import './Login.scss';
 import { usersService } from '../../services/users/users.service';
+import './Login.scss';
 
 const DISPLAY_OPTIONS = {
     SIGN_IN: 'signin',

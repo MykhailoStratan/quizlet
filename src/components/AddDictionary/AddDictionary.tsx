@@ -1,8 +1,8 @@
-import React, { FC, useEffect } from 'react';
-import Button from '../UI/Button/Button';
+import React, { FC, useState } from 'react';
 import { v4 as uuid } from 'uuid';
-import './AddDictionary.scss';
+import Button from '../UI/Button/Button';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
+import './AddDictionary.scss';
 
 interface FormElements extends HTMLFormControlsCollection {
     name: HTMLInputElement;
@@ -13,8 +13,12 @@ interface AddDictionaryFormElement extends HTMLFormElement {
 
 
 const AddDictionary: FC = () => {
+    const [error, setError] = useState('');
+
     const handleSubmit = async (event: React.FormEvent<AddDictionaryFormElement>) => {
         event.preventDefault();
+        setError('');
+
         let { name } = event.currentTarget;
 
         try {
@@ -28,20 +32,20 @@ const AddDictionary: FC = () => {
             name.value = '';
         } catch (error) {
             console.log(error)
-            // setError(`${error}`)
+            setError(`${error}`)
         }
     }
 
     return (
         <>
             <form onSubmit={ handleSubmit }>
+                {error && <div id="error" className="error">{error}</div>}
                 <div id="error" className="error">{}</div>
                 <label htmlFor="name">Enter Dictionary Name:</label>
                 <input id="name" type="text" />
                 <Button>Add</Button>
             </form>
         </>
-
     );
 }
 

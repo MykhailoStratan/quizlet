@@ -1,10 +1,7 @@
 import React, { FC, useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import Button from '../../UI/Button/Button';
 import { authService } from '../../../services/auth/auth.service';
-import { iUser } from '../../../types/user.type';
-import { iDictionary } from '../../../types/dictionary.type';
-import { dictionaryService } from '../../../services/dictionary/dictionary.service';
-import { v4 as uuid } from 'uuid';
 import { usersService } from '../../../services/users/users.service';
 import './SignUp.scss';
 
@@ -13,6 +10,7 @@ interface FormElements extends HTMLFormControlsCollection {
     password: HTMLInputElement;
     name: HTMLInputElement;
 }
+
 interface SignUpFormElement extends HTMLFormElement {
     readonly elements: FormElements;
 }
@@ -46,11 +44,10 @@ const SignUp: FC = () => {
         password.value = '';
         // @ts-ignore
         name.value = '';
-    }
+    };
 
     return (
         <>
-
             <form className="signup-form" onSubmit={ handleSubmit }>
                 { error ? <div className="signup-form-error">{ error }</div> : null }
                 <label htmlFor="email">Email:</label>

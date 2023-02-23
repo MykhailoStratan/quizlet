@@ -7,6 +7,7 @@ interface FormElements extends HTMLFormControlsCollection {
     username: HTMLInputElement;
     password: HTMLInputElement;
 }
+
 interface SignInFormElement extends HTMLFormElement {
     readonly elements: FormElements;
 }
@@ -27,7 +28,7 @@ const SignIn: FC<{onUserData: (value: any) => void}> = ({onUserData}) => {
 
         username.value = '';
         password.value = '';
-    }
+    };
 
     return (
         <>

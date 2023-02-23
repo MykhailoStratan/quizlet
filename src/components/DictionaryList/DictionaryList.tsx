@@ -1,11 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import './DictionaryList.scss';
 import Button from '../UI/Button/Button';
 import Modal from '../UI/Modal/Modal';
 import AddDictionary from '../AddDictionary/AddDictionary';
-import { iUser } from '../../types/user.type';
+import type { iDictionary } from '../../types/dictionary.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
-import { iDictionary } from '../../types/dictionary.type';
+import './DictionaryList.scss';
 
 interface DictionaryListProps {
     onDictionarySelect: (dictionary: iDictionary) => void,

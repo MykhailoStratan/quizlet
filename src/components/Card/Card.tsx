@@ -1,5 +1,5 @@
 import { FC, useEffect, useState } from 'react';
-import { iWord } from '../../types/card.type';
+import type { iWord } from '../../types/card.type';
 import './Card.scss';
 
 interface CardProps extends iWord {
@@ -24,7 +24,7 @@ const Card: FC<CardProps> = ({ id, word, translation , cardStyle='', children })
 
     const cardOuterClassName = (): string => {
         return `card-outer ${cardStyle}`;
-    }
+    };
 
     return (
         <div
@@ -47,7 +47,7 @@ const Card: FC<CardProps> = ({ id, word, translation , cardStyle='', children })
             </div>
             <div>{ children }</div>
         </div>
-    )
+    );
 }
 
 export default Card;

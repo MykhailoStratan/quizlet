@@ -18,7 +18,9 @@ class DictionaryService {
         const isDictionaryExist = existedDictionaries.find(dictionary => dictionary.name === payload.name);
 
         if (isDictionaryExist) {
-            console.log(`Dictionary "${payload.name}" already exist for the current user!`);
+            const error = `Dictionary "${payload.name}" already exist for the current user!`;
+            console.log(error);
+            throw new Error(error);
             return;
         }
 
@@ -48,7 +50,7 @@ class DictionaryService {
 
         if (existedDictionaries[dictionaryIndex].words.some(item => item.word === newWord.word)) {
             const error = `Word "${newWord.word}" already exist in the current dictionary!`;
-            return error;
+            throw new Error(error);
         } else {
             existedDictionaries[dictionaryIndex].words.push(newWord);
         }

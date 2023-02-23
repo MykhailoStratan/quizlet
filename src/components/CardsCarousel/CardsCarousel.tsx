@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import Card from '../Card/Card';
 import Button from '../UI/Button/Button';
-import { getAllByWord } from '../../words-api/words-api';
+import type { iDictionary } from '../../types/dictionary.type';
 import type { iWord } from '../../types/card.type';
-import './CardsCarousel.scss';
-import { iDictionary } from '../../types/dictionary.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
+import { getAllByWord } from '../../words-api/words-api';
+import './CardsCarousel.scss';
 
 interface CardsCarouselProps {
     dictionary: iDictionary;
@@ -14,7 +14,6 @@ interface CardsCarouselProps {
 }
 
 const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange, className}) => {
-    //todo: separate wordInfo data from this component, maybe create parent for both of them
     const [cards, setCards] = useState<iWord[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iWord>();
@@ -32,8 +31,8 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     };
 
     const slideRight = () => {
-        if (cardIndex >= cards.length-1) {
-            setCurrentCard(cards[cards.length-1]);
+        if (cardIndex >= cards.length - 1) {
+            setCurrentCard(cards[cards.length - 1]);
             return;
         }
         setCardIndex(cardIndex + 1);
@@ -41,11 +40,12 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement> ) => {
-        // console.log(event)
         event.preventDefault();
+
         if (event.code === 'ArrowRight') {
             slideRight();
         }
+
         if (event.code === 'ArrowLeft') {
             slideLeft();
         }

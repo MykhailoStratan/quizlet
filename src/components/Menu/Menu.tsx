@@ -1,9 +1,9 @@
 import { FC, useState } from 'react';
-import './Menu.scss';
 import { Link } from 'react-router-dom';
 import Button from '../UI/Button/Button';
+import './Menu.scss';
 
-type MenuProps = {
+interface MenuProps {
     menuOptions: string[];
 };
 

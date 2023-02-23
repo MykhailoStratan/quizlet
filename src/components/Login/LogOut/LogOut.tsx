@@ -9,7 +9,7 @@ const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) =
     const onLogOut = () => {
         authService.logOut();
         setIsLogged(false);
-    }
+    };
 
     return (
         <div className="logout-wrapper">

@@ -1,16 +1,16 @@
-import './App.css'
+import React, { FC, useEffect, useState } from 'react';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
 import CardsCarousel from './components/CardsCarousel/CardsCarousel';
-import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import AddCard from './components/AddCard/AddCard';
-import React, { FC, useEffect, useState } from 'react';
 import DictionaryList from './components/DictionaryList/DictionaryList';
+import AddCard from './components/AddCard/AddCard';
 import WordInfo from './components/WordInfo/WordInfo';
 import Login from './components/Login/Login';
-import { iWordInfo } from './types/word-info.type';
-import { iDictionary } from './types/dictionary.type';
-import { usersService } from './services/users/users.service';
 import LogOut from './components/Login/LogOut/LogOut';
+import type { iWordInfo } from './types/word-info.type';
+import type { iDictionary } from './types/dictionary.type';
+import { usersService } from './services/users/users.service';
+import './App.css'
 
 const defaultMenu = [ 'Home', 'Learn', 'Add New Words' ];
 
@@ -47,7 +47,6 @@ const App: FC = () => {
 
     useEffect(() => {
         (async () => {
-            // const activeUserSubscription = await usersService.subscribeToUsers();
             await usersService.updateUsers();
 
             setMenu(getMenuOptions());
