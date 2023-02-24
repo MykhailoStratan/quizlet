@@ -65,7 +65,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                 setCurrentCard(words[0]);
                 setCardIndex(0);
             } else {
-                setCards(null);
+                setCards([]);
             }
         })();
     },[dictionary])
