@@ -64,6 +64,8 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                 setCards(words);
                 setCurrentCard(words[0]);
                 setCardIndex(0);
+            } else {
+                setCards(null);
             }
         })();
     },[dictionary])
@@ -83,7 +85,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                 onKeyDown={ handleKeyDown }
                 tabIndex={ 0 }
             >
-                { cards.length? <div className="card-container">
+                { cards?.length? <div className="card-container">
                     { cards.map((card, index) => {
                         let position = (index > cardIndex)
                             ? "nextCard"

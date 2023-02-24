@@ -1,19 +1,14 @@
 import {
     addDoc,
-    collection, CollectionReference,
-    doc, DocumentData, DocumentReference,
-    DocumentSnapshot,
+    collection,
+    CollectionReference,
+    doc,
+    DocumentData,
     getDoc,
     getDocs,
-    QueryDocumentSnapshot,
-    setDoc, updateDoc
+    updateDoc
 } from 'firebase/firestore';
 import { db } from './firebase';
-import { iUser } from '../types/user.type';
-
-interface Payload {
-    [x: string]: any;
-}
 
 class FirebaseActions {
     private getCollectionRef(name: string, segments?: string[]):  CollectionReference<DocumentData> {
@@ -36,13 +31,11 @@ class FirebaseActions {
     public async getDocument<T>(collectionName: string, documentName: string): Promise<DocumentData | undefined> {
         const documentRef = doc(db, collectionName, documentName); // todo: Add Converter here to define data type
         const documentSnap = await getDoc(documentRef);
-        // let documentData: T;
 
         if (documentSnap.exists()) {
             console.log("Document data:", documentSnap.data());
             return documentSnap.data();
         } else {
-            // doc.data() will be undefined in this case
             console.log("No such document!");
             return;
         }
@@ -63,49 +56,6 @@ class FirebaseActions {
         }
         return collectionData;
     }
-    //
-    // public async fetchCollection(collectionName: string): Promise<QueryDocumentSnapshot[]> {
-    //     let data = await getDocs(collection(db, collectionName));
-    //     return data.docs;
-    // }
-    //
-    // async fetchDoc(collectionName: string, docName: string): Promise<DocumentSnapshot> {
-    //     let data = await getDoc(doc(db, collectionName, docName));
-    //     return data;
-    // }
-    //
-    // async fetchSubCollection(collectionName: string, docName: string, subCollectionName: string): Promise<QueryDocumentSnapshot[]> {
-    //     let data = await getDocs(collection(db, collectionName, docName, subCollectionName));
-    //     return data.docs;
-    // }
-    //
-    // async postToCollection<Type extends Payload>(collectionName: string, paylodad: Type): Promise<void> {
-    //     let ref = collection(db, collectionName);
-    //
-    //     try {
-    //         await addDoc(ref, paylodad)
-    //         console.log('added to firestore', paylodad);
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // }
-    //
-    // async postToSubCollection<Type extends Payload>(
-    //     collectionName: string,
-    //     docName: string,
-    //     subCollectionName: string,
-    //     paylodad: Type
-    // ): Promise<void> {
-    //
-    //     let ref = collection(db, collectionName, docName, subCollectionName);
-    //
-    //     try {
-    //         await addDoc(ref, paylodad)
-    //         console.log('added to firestore', paylodad);
-    //     } catch(err) {
-    //         console.log(err);
-    //     }
-    // }
 }
 
 export const firebaseActions = new FirebaseActions();

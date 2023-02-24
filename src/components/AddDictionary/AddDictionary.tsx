@@ -31,7 +31,6 @@ const AddDictionary: FC = () => {
             // @ts-ignore works as expected
             name.value = '';
         } catch (error) {
-            console.log(error)
             setError(`${error}`)
         }
     }

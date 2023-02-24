@@ -1,4 +1,4 @@
-export interface iWordInfo {
+export type iWordInfo = {
     word: string,
     results: WordDefinitionInfo[],
     syllables: {
@@ -11,7 +11,7 @@ export interface iWordInfo {
     frequency: number
 }
 
-interface WordDefinitionInfo {
+type WordDefinitionInfo = {
     definition: string,
     partOfSpeech: string,
     typeOf: string[],

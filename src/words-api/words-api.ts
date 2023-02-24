@@ -14,6 +14,5 @@ export async function getAllByWord(word: string) {
         throw new Error(message);
     }
 
-    // console.log(response.json())
     return response.json();
 }

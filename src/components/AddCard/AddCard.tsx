@@ -37,7 +37,6 @@ const AddCard: FC<AddCardProps> = ({dictionary}) => {
             translation.value = '';
 
         } catch (error) {
-            console.log(error)
             setError(`${error}`)
         }
     }

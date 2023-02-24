@@ -1,13 +1,9 @@
 import { iWord } from '../../types/card.type';
 import { iDictionary } from '../../types/dictionary.type';
-import { doc, onSnapshot, Unsubscribe } from 'firebase/firestore';
-import { db } from '../../firebase/firebase';
 import { usersService } from '../users/users.service';
 
 class DictionaryService {
-    private subscription: Unsubscribe | undefined;
     private db: any;
-    private dictionaries: iDictionary[] = [];
 
     public async initialize(databaseActions: any): Promise<void> {
         this.db = databaseActions;
@@ -19,9 +15,7 @@ class DictionaryService {
 
         if (isDictionaryExist) {
             const error = `Dictionary "${payload.name}" already exist for the current user!`;
-            console.log(error);
             throw new Error(error);
-            return;
         }
 
         const newData = existedDictionaries?.length

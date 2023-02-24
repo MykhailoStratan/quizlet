@@ -24,7 +24,6 @@ const App: FC = () => {
 
     const onSelectActiveDictionary = (dictionary: iDictionary) => {
         setActiveDictionary(dictionary);
-
         if (!dictionary.words.length) {
             setWordInfo(null);
         }
@@ -52,7 +51,12 @@ const App: FC = () => {
             setMenu(getMenuOptions());
         })();
 
-        setActiveDictionary(usersService.getActiveUser()?.dictionaries[0]);
+        const activeUser = usersService.getActiveUser();
+
+        if (activeUser) {
+            setActiveDictionary(activeUser.dictionaries[0]);
+        }
+
 
     },[isLogged])
 
@@ -98,4 +102,4 @@ const App: FC = () => {
     );
 }
 
-export default App
+export default App;

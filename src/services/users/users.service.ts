@@ -67,24 +67,6 @@ class UsersService {
         await this.updateUsers();
     }
 
-    // public async subscribeToUsers(activeUserSetter?: Function) {
-    //     const collectionQuery = query(collection(db, "cities")).withConverter(userConverter);
-    //     const subscription = onSnapshot(
-    //         collectionQuery,
-    //         { includeMetadataChanges: true },
-    //         (querySnapshot) => {
-    //             querySnapshot.forEach((doc) => {
-    //                 console.log(doc)
-    //                 this.users.push(doc)
-    //             });
-    //
-    //             if (activeUserSetter) {
-    //                 activeUserSetter(this.getActiveUser());
-    //             }
-    //         });
-    //     return subscription;
-    // }
-
     public clearUsers() {
         this.users = [];
         this.activeUser = null;
