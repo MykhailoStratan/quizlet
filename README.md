@@ -7,4 +7,4 @@ Includes:
 - Firebase,
 - WordsAPI
 
-To run project in the development mode enter to the command line "run npm dev"
+To run project in the development mode enter to the command line "run npm dev" on the main branch
