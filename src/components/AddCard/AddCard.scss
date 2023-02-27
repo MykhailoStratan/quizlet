@@ -11,28 +11,27 @@
   height: 20rem;
   width: 25rem;
   border-radius: 20px;
-}
 
-label, input {
-  //display: block;
-  margin-bottom: 15px;
-}
+  label, input {
+    margin-bottom: 15px;
+    color: white;
+  }
 
-input {
-  background-color: white;
-  border: transparent;
-  border-radius: 5px;
-  height: 20px;
-  width: 200px;
-  color: black;
-  padding: 10px;
+  input {
+    background-color: white;
+    border: transparent;
+    border-radius: 5px;
+    height: 20px;
+    width: 200px;
+    color: black;
+    padding: 10px;
 
-  &:focus {
-    outline: none;
+    &:focus {
+      outline: none;
+    }
   }
 }
 
 .error {
   color: #e76666;
-
 }

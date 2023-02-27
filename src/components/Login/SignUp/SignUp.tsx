@@ -27,7 +27,6 @@ const SignUp: FC = () => {
         try {
             await authService.createUser(email.value, password.value);
         } catch (error) {
-            console.log(error)
             setError(`${error}`)
         }
 

@@ -11,6 +11,7 @@ import type { iWordInfo } from './types/word-info.type';
 import type { iDictionary } from './types/dictionary.type';
 import { usersService } from './services/users/users.service';
 import './App.css'
+import Home from './components/Home/Home';
 
 const defaultMenu = [ 'Home', 'Learn', 'Add New Words' ];
 
@@ -18,7 +19,7 @@ const App: FC = () => {
     const [menu, setMenu] = useState(defaultMenu);
     const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'));
 
-    const [activeDictionary, setActiveDictionary] = useState<iDictionary>();
+    const [activeDictionary, setActiveDictionary] = useState<iDictionary | null>();
     const [wordInfo, setWordInfo] = useState<iWordInfo | null>(null);
     const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
 
@@ -55,6 +56,8 @@ const App: FC = () => {
 
         if (activeUser) {
             setActiveDictionary(activeUser.dictionaries[0]);
+        } else {
+            setActiveDictionary(null);
         }
 
 
@@ -65,8 +68,8 @@ const App: FC = () => {
             <Router basename="/quizlet">
                 <Menu menuOptions={ menu }></Menu>
                 <Routes>
-                    <Route path="/" element={ <div style={{ fontSize: '100px' }}>Welcome to Quizlet!</div> } />
-                    <Route path="/home" element={ <div style={{ fontSize: '100px' }}>Welcome to Quizlet!</div> } />
+                    <Route path="/" element={ <Home isLogged={ isLogged }/>} />
+                    <Route path="/home" element={ <Home isLogged={ isLogged }/> } />
                     <Route path="/learn" element={
                         activeDictionary
                             ? <>

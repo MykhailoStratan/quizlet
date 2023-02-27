@@ -1,4 +1,5 @@
 import React, { FC, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../UI/Button/Button';
 import { authService } from '../../../services/auth/auth.service';
 import './SignIn.scss';
@@ -14,6 +15,7 @@ interface SignInFormElement extends HTMLFormElement {
 
 const SignIn: FC<{onUserData: (value: any) => void}> = ({onUserData}) => {
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleSignIn = async (event: React.FormEvent<SignInFormElement>) => {
         event.preventDefault();
@@ -22,6 +24,7 @@ const SignIn: FC<{onUserData: (value: any) => void}> = ({onUserData}) => {
         try {
             const response = await authService.signIn(username.value, password.value);
             onUserData(response.user);
+            navigate('/home');
         } catch (error) {
             setError(`${error}`)
         }

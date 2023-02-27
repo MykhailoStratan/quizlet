@@ -1,13 +1,15 @@
 import { FC, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import './Menu.scss';
 
 interface MenuProps {
     menuOptions: string[];
-};
+}
 
 const Menu: FC<MenuProps> = ({ menuOptions }) => {
+    const [activeOption, setActiveOption] = useState<string>(menuOptions[0]);
+
     const menu = menuOptions.map((option, index) => {
         return {
             name: option,
@@ -15,13 +17,18 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
         }
     });
 
-    const [activeMenuId, setActiveMenuId] = useState(0);
+    const location = useLocation();
 
-    const menuOptionClass = (id: number) => {
-        return id === activeMenuId ? 'menu-option' : 'menu-option active';
+    const getMenuOptionClassName = (menuOption: string) => {
+        const currentLocation = location.pathname.replace('/','');
+        const formattedLocation = currentLocation.toLowerCase().replaceAll(' ', '-')
+        const formattedMenuOption = menuOption.toLowerCase().replaceAll(' ', '-')
+
+        return  formattedMenuOption === formattedLocation ? 'menu-option active' : 'menu-option';
     };
-    const menuClick = (id: number) => {
-        setActiveMenuId(id);
+
+    const setMenuOptionActive = (menuOption: string) => {
+        setActiveOption(menuOption);
     };
 
     return (
@@ -36,8 +43,8 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
                             key={ option.id }
                             id={ option.id.toString() }
                         ><Button
-                            className={ menuOptionClass(option.id) }
-                            onClick={ () => menuClick(option.id) }
+                            className={ getMenuOptionClassName(option.name) }
+                            onClick={ () => setMenuOptionActive(option.name) }
                         >{ option.name }</Button>
                         </li>
                     </Link>

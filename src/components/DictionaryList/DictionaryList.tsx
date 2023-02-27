@@ -15,6 +15,12 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
     const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        if (event.currentTarget.value === 'Add new dictionary') {
+            setShowAddModal(true);
+            event.currentTarget.value = dictionaries[0].name;
+            return;
+        }
+
         const currentDictionary = dictionaries.find(dictionary => dictionary.name === event.currentTarget.value);
 
         if (currentDictionary) {
@@ -39,6 +45,11 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
           <select
               onChange={ handleSelectChange }
           > // todo: create custom dropdown component
+              <option
+                  onSelect={ () => setShowAddModal(true) }
+                  key={ 'default-option' }
+                  value={ 'Add new dictionary' }
+              >Add new dictionary</option>
               { dictionaries.map(dictionary => {
                   return <option
                       key={ dictionary.id }
