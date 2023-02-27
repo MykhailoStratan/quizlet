@@ -15,11 +15,11 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
     const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
 
     const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        if (event.currentTarget.value === 'Add new dictionary') {
-            setShowAddModal(true);
-            event.currentTarget.value = dictionaries[0].name;
-            return;
-        }
+        // if (event.currentTarget.value === 'Add new dictionary') {
+        //     setShowAddModal(true);
+        //     event.currentTarget.value = dictionaries[0].name;
+        //     return;
+        // } //todo: create option to add new dictionary
 
         const currentDictionary = dictionaries.find(dictionary => dictionary.name === event.currentTarget.value);
 
@@ -53,11 +53,11 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
                       { dictionary.name }
                   </option>
               }) }
-              <option
-                  onSelect={ () => setShowAddModal(true) }
-                  key={ 'default-option' }
-                  value={ 'Add new dictionary' }
-              >Add new dictionary</option>
+              {/*<option*/} //todo: create option to add new dictionary
+              {/*    onSelect={ () => setShowAddModal(true) }*/}
+              {/*    key={ 'default-option' }*/}
+              {/*    value={ 'Add new dictionary' }*/}
+              {/*>Add new dictionary</option>*/}
           </select>
           <Button className={'btn-add-dictionary'} onClick={ () => setShowAddModal(true) }>+</Button>
           { showAddModal ? <Modal onClick={ onModalClick }><AddDictionary></AddDictionary></Modal> : null }
