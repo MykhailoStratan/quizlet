@@ -45,11 +45,6 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
           <select
               onChange={ handleSelectChange }
           > // todo: create custom dropdown component
-              <option
-                  onSelect={ () => setShowAddModal(true) }
-                  key={ 'default-option' }
-                  value={ 'Add new dictionary' }
-              >Add new dictionary</option>
               { dictionaries.map(dictionary => {
                   return <option
                       key={ dictionary.id }
@@ -58,6 +53,11 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect }) => {
                       { dictionary.name }
                   </option>
               }) }
+              <option
+                  onSelect={ () => setShowAddModal(true) }
+                  key={ 'default-option' }
+                  value={ 'Add new dictionary' }
+              >Add new dictionary</option>
           </select>
           <Button className={'btn-add-dictionary'} onClick={ () => setShowAddModal(true) }>+</Button>
           { showAddModal ? <Modal onClick={ onModalClick }><AddDictionary></AddDictionary></Modal> : null }
