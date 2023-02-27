@@ -1,7 +1,7 @@
 {
-  "homepage": "https://mikhailstratan.github.io/quizlet/",
+  "homepage": "https://mikhailstratan.github.io/quizlet",
   "name": "quizlet",
-  "private": true,
+  "private": false,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
