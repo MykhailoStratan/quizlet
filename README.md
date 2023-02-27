@@ -1,5 +1,7 @@
 # quizlet
 This is the pet-project created based on the popular application "Quizlet"
+I am using this project to learn React and its environment from 0
+
 Includes:
 - Vite,
 - React,
