@@ -73,7 +73,9 @@ const App: FC = () => {
                     <Route path="/learn" element={
                         activeDictionary
                             ? <>
-                                <DictionaryList onDictionarySelect={ onSelectActiveDictionary } />
+                                <DictionaryList 
+                                    onDictionarySelect={ onSelectActiveDictionary }
+                                    activeDictionary={ activeDictionary } />
                                 <CardsCarousel
                                     dictionary={ activeDictionary }
                                     onCurrentWordChange={ onCurrentWordChange }
@@ -81,7 +83,7 @@ const App: FC = () => {
                                 />
                                 { wordInfo ? <WordInfo
                                     wordInfo={ wordInfo } // todo: subscription for words to receive updates?
-                                    isShowWordInfo={showWordInfo}
+                                    isShowWordInfo={ showWordInfo }
                                     onShowWordInfoChange={ isWordInfoShown }
                                 ></WordInfo> : null }
                             </>
@@ -90,7 +92,9 @@ const App: FC = () => {
                     <Route path="/add-new-words" element={
                         activeDictionary
                             ? <>
-                                <DictionaryList onDictionarySelect={ onSelectActiveDictionary } />
+                                <DictionaryList 
+                                    onDictionarySelect={ onSelectActiveDictionary }
+                                    activeDictionary={ activeDictionary } />
                                 <AddCard dictionary={ activeDictionary } />
                             </>
                             : null

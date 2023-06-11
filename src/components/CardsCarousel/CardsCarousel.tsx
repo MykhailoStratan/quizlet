@@ -6,6 +6,7 @@ import type { iWord } from '../../types/card.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
 import { getAllByWord } from '../../words-api/words-api';
 import './CardsCarousel.scss';
+import AddCard from '../AddCard/AddCard';
 
 interface CardsCarouselProps {
     dictionary: iDictionary;
@@ -17,6 +18,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     const [cards, setCards] = useState<iWord[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iWord>();
+    console.log(dictionary)
 
     const prevBtn = useRef<HTMLElement | null>(null);
     const nextBtn = useRef<HTMLElement | null>(null);
@@ -80,12 +82,12 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
 
     return (
         <>
-            <div
+            { cards?.length? <div
                 className={ `carousel${className ? '-'+className : ''}`}
                 onKeyDown={ handleKeyDown }
                 tabIndex={ 0 }
             >
-                { cards?.length? <div className="card-container">
+                <div className="card-container">
                     { cards.map((card, index) => {
                         let position = (index > cardIndex)
                             ? "nextCard"
@@ -103,8 +105,8 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                             return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }
                     }) }
-                </div> : null }
-            </div>
+                </div>
+            </div> : <AddCard dictionary={ dictionary }/> }
         </>
     );
 }

@@ -16,7 +16,7 @@ const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) =
 
     return (
         <div className="logout-wrapper">
-            <div>{ `Logged as ${ usersService.getActiveUser()?.email }` }</div>
+            <div>{ usersService.getActiveUser()?.email }</div>
             <Button onClick={ () => onLogOut() }>Log Out</Button>
         </div>
     );

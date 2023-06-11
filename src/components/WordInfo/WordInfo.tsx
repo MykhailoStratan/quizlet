@@ -40,7 +40,7 @@ const WordInfo: FC<WordInfoProps> = ({ wordInfo, isShowWordInfo, onShowWordInfoC
                         { wordInfo.results.map((result, index) => {
                             return <ul className="word-definition" key={ index }>
                                 <li>
-                                    <h4 className="word-definition-head-span"><strong>{`- Definition:`}</strong></h4> <p>{`"${ result.definition }"`}</p>
+                                    <h4 className="word-definition-head-span"><strong>{`Definition:`}</strong></h4> <p>{`"${ result.definition }"`}</p>
                                 </li>
                                 <li><span>{ `Part of speech:` }</span> <span>{ result.partOfSpeech }</span></li>
                                 { result.synonyms

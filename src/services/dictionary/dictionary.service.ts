@@ -38,6 +38,14 @@ class DictionaryService {
         return dictionaries;
     }
 
+    public async getDictionarySize(activeDictionaryName: string): Promise<number> {
+        const dictionaries = await this.getDictionaries();
+        const result = dictionaries.find(dictionary => dictionary.name === activeDictionaryName)?.words.length || 0;
+        console.log(result);
+        console.log(activeDictionaryName);
+        return result;
+    }
+
     public async addWordToDictionary(currentDictionary: iDictionary, newWord: iWord) {
         const existedDictionaries = await this.getDictionaries();
         const dictionaryIndex = existedDictionaries.findIndex(dictionary => dictionary.id === currentDictionary.id);
