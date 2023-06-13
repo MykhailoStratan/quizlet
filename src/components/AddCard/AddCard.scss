@@ -7,14 +7,16 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  border: white 2px solid;
+  // border: white 2px solid;
+  background-color: #ffe7ce;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
   height: 20rem;
   width: 25rem;
   border-radius: 20px;
 
   label, input {
     margin-bottom: 15px;
-    color: white;
+    color: #65656a;
   }
 
   input {

@@ -31,7 +31,7 @@
   position: absolute;
   top: 105%;
   border-radius: 5px;
-  background-color: #5B4BBC;
+  background-color: #ffe7ce;
 
   &-prev {
     left: 20%;
@@ -43,5 +43,11 @@
 
   &-blocked {
     background-color: grey;
+  }
+}
+
+@media (720px <= width <= 1300px) {
+  .card-container {
+    width: 0rem;
   }
 }

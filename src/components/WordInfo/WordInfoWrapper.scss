@@ -15,10 +15,20 @@
   width: 800px;
   height: 800px;
   padding: 15px;
-  background-color: #2d2d2d;
-  border: #5B4BBC 2px solid;
+  background-color: #ffe7ce;
+  color: #65656a;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
   border-radius: 20px;
-  color: white;
   overflow: auto;
   animation: rollout 0.5s;
+}
+
+
+@media (720px <= width <= 1300px) {
+  .word-info-wrapper {
+    top: 650px;
+    // width: 700px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
 }

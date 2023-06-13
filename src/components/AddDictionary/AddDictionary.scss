@@ -7,7 +7,7 @@ form {
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  border: white 2px solid;
+  background-color: #ffe7ce;
   height: 20rem;
   width: 25rem;
   border-radius: 20px;
@@ -16,7 +16,7 @@ form {
 label, input {
   //display: block;
   margin-bottom: 15px;
-  color: black;
+  color: #65656a;
 }
 
 input {

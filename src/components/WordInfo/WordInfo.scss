@@ -65,3 +65,18 @@
   left: 35px;
   top: 200px;
 }
+
+@media (720px <= width <= 1300px) {
+  .btn-show-word-info-hidden {
+    top: 600px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+  }
+  .btn-show-word-info {
+    top: 600px;
+    z-index: 100;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border-radius: 5px !important;
+  }
+}

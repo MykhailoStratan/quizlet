@@ -12,8 +12,11 @@
       min-width: 250px;
       padding: 15px;
       text-align: center;
-      border: 2px solid #5B4BBC;
+      background-color: #ffe7ce;
+      box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
+      border: none;
       border-radius: 10px;
+      color: #65656a;
     }
   
     & .btn-add-dictionary {

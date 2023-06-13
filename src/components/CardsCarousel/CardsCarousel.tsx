@@ -106,7 +106,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                         }
                     }) }
                 </div>
-            </div> : <AddCard dictionary={ dictionary }/> }
+            </div> : null }
         </>
     );
 }
