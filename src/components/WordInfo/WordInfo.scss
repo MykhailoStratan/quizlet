@@ -55,9 +55,10 @@
 
 .btn-show-word-info {
   position: absolute;
-  left: 0px;
-  top: 0px;
-  border-radius: 0 0 20px 0 !important;
+  left: 35px;
+  top: 200px;
+  z-index: 100;
+  border-radius: 20px 0 20px 0 !important;
 }
 
 .btn-show-word-info-hidden {

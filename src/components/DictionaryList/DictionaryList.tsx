@@ -5,6 +5,9 @@ import AddDictionary from '../AddDictionary/AddDictionary';
 import type { iDictionary } from '../../types/dictionary.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
 import './DictionaryList.scss';
+import { collection, doc, onSnapshot } from '@firebase/firestore';
+import { db } from '../../firebase/firebase';
+import { usersService } from '../../services/users/users.service';
 
 interface DictionaryListProps {
     onDictionarySelect: (dictionary: iDictionary) => void,
@@ -44,6 +47,23 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDic
             setDictionaries(await dictionaryService.getDictionaries());
             setDictionarySize(activeDictionary.words.length);
         })();
+
+        const collectionRef = collection(db, 'users');
+
+        const unsubscribe = onSnapshot(collectionRef, {
+            next: (snapshot) => {
+            const updatedData: any = snapshot.docs.find((doc) => doc.data().id === usersService.getActiveUser()!.id);
+
+            const dictionaries = updatedData.data().dictionaries;
+            setDictionaries(dictionaries);
+
+            const currentDictionary = dictionaries.find((dictionary: iDictionary) => dictionary.name === activeDictionary.name)
+            setDictionarySize(currentDictionary.words.length);
+        }});
+
+        return () => {
+            unsubscribe();
+        };
     }, [])
 
     return (
