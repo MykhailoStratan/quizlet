@@ -35,9 +35,11 @@ const App: FC = () => {
         return result;
     }
 
-    function onCurrentWordChange(wordData: iWordInfo) {
+    function onCurrentWordChange(wordData: iWordInfo | null) {
         if (wordData) {
             setWordInfo(wordData);
+        } else {
+            setWordInfo(null)
         }
     }
 

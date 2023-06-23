@@ -1,12 +1,15 @@
+import { Firestore, collection, onSnapshot } from '@firebase/firestore';
 import { iWord } from '../../types/card.type';
 import { iDictionary } from '../../types/dictionary.type';
 import { usersService } from '../users/users.service';
+import { db } from '../../firebase/firebase';
 
 class DictionaryService {
-    private db: any;
+    private dbActions: any;
+    private unsubscribeFromDictionaryRealTimeUpdates: any;
 
     public async initialize(databaseActions: any): Promise<void> {
-        this.db = databaseActions;
+        this.dbActions = databaseActions;
     }
 
     public async postDictionary(payload: iDictionary): Promise<void> {
@@ -34,7 +37,7 @@ class DictionaryService {
     }
 
     public async getDictionaries(): Promise<iDictionary[]> {
-        const { dictionaries } = await this.db.getDocument('users', usersService.getActiveUser()?.firebaseId);
+        const { dictionaries } = await this.dbActions.getDocument('users', usersService.getActiveUser()?.firebaseId);
         return dictionaries;
     }
 
@@ -59,7 +62,7 @@ class DictionaryService {
 
         const activeUser = usersService.getActiveUser();
         if (activeUser) {
-            await this.db.updateDocument('users', activeUser.firebaseId, {
+            await this.dbActions.updateDocument('users', activeUser.firebaseId, {
                 dictionaries: [...existedDictionaries]
             });
         }
@@ -72,6 +75,24 @@ class DictionaryService {
         if (existedDictionaries[dictionaryIndex].words.length) {
             return existedDictionaries[dictionaryIndex].words;
         }
+    }
+
+    public getDictionaryWordsCount(currentDictionary: iDictionary, setDataHook: (value: React.SetStateAction<number | null>) => void): () => void {
+        const collectionRef = collection(db, 'users');
+
+        const unsubscribe = onSnapshot(collectionRef, {
+            next: (snapshot) => {
+            const updatedData: any = snapshot.docs.find((doc) => doc.data().id === usersService.getActiveUser()!.id);
+
+            const dictionaries = updatedData.data().dictionaries;
+
+            const activeDictionary = dictionaries.find((dictionary: iDictionary) => dictionary.name === currentDictionary.name)
+            setDataHook(activeDictionary.words.length);
+        }});
+
+        return () => {
+            unsubscribe();
+        };
     }
 }
 

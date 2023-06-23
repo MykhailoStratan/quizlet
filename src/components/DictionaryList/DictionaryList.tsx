@@ -17,7 +17,7 @@ interface DictionaryListProps {
 const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDictionary }) => {
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
     const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
-    const [dictionarySize, setDictionarySize] = useState<number>(0);
+    const [dictionarySize, setDictionarySize] = useState<number | null>(null);
 
     const handleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
         // if (event.currentTarget.value === 'Add new dictionary') {
@@ -32,7 +32,7 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDic
             onDictionarySelect(selectedDictionary);
 
             const activeDictionaryWords = await dictionaryService.getWordsFromDictionary(selectedDictionary);
-            activeDictionaryWords ? setDictionarySize(activeDictionaryWords.length) : null;
+            activeDictionaryWords ? setDictionarySize(activeDictionaryWords.length) : setDictionarySize(null);
         }
     };
 
@@ -48,22 +48,7 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDic
             setDictionarySize(activeDictionary.words.length);
         })();
 
-        const collectionRef = collection(db, 'users');
-
-        const unsubscribe = onSnapshot(collectionRef, {
-            next: (snapshot) => {
-            const updatedData: any = snapshot.docs.find((doc) => doc.data().id === usersService.getActiveUser()!.id);
-
-            const dictionaries = updatedData.data().dictionaries;
-            setDictionaries(dictionaries);
-
-            const currentDictionary = dictionaries.find((dictionary: iDictionary) => dictionary.name === activeDictionary.name)
-            setDictionarySize(currentDictionary.words.length);
-        }});
-
-        return () => {
-            unsubscribe();
-        };
+        dictionaryService.getDictionaryWordsCount(activeDictionary, setDictionarySize);
     }, [])
 
     return (
@@ -95,7 +80,7 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDic
           { showAddModal ? <Modal onClick={ onModalClick }><AddDictionary></AddDictionary></Modal> : null }
         </div>
         <div className="dictionary-words-counter">
-            <p>Words: { dictionarySize } </p>
+            { dictionarySize ? <p>Words: { dictionarySize } </p> : <p>{ `No words here :(` } </p>}
         </div>
       </div>
     );

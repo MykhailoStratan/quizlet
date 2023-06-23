@@ -6,7 +6,6 @@ import type { iWord } from '../../types/card.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
 import { getAllByWord } from '../../words-api/words-api';
 import './CardsCarousel.scss';
-import AddCard from '../AddCard/AddCard';
 
 interface CardsCarouselProps {
     dictionary: iDictionary;
@@ -54,9 +53,12 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     }
 
     const fetchWordInfo = async (word: string) => {
-        await getAllByWord(word).then(data => {
-            onCurrentWordChange(data);
-        });
+        try {
+            const wordData = await getAllByWord(word);
+            onCurrentWordChange(wordData);
+        } catch(err) {
+            onCurrentWordChange(null);
+        }
     }
 
     useEffect(() => {

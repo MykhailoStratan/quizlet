@@ -19,6 +19,7 @@ interface AddCardProps {
 
 const AddCard: FC<AddCardProps> = ({dictionary}) => {
     const [error, setError] = useState('');
+    const [successMessage, setSuccessMessage] = useState('');
 
     const handleSubmit = async (event: React.FormEvent<AddCardFormElement>) => {
         event.preventDefault();
@@ -33,6 +34,8 @@ const AddCard: FC<AddCardProps> = ({dictionary}) => {
                 id: uuid()
             });
 
+            setSuccessMessage(`Word "${word.value.trim( )}" has been added to dictionary ${dictionary.name}!`);
+
             word.value = '';
             translation.value = '';
 
@@ -43,7 +46,8 @@ const AddCard: FC<AddCardProps> = ({dictionary}) => {
 
     return(
         <form className="add-card-form" onSubmit={ handleSubmit }>
-            {error && <div id="error" className="error">{error}</div>}
+            {successMessage && <div id="success">{ successMessage }</div>}
+            {error && <div id="error" className="error">{ error }</div>}
             <label htmlFor="word">Enter English word:</label>
             <input id="word" type="text" />
             <label htmlFor="translation">Enter translation:</label>
