@@ -8,6 +8,7 @@ import './DictionaryList.scss';
 import { collection, doc, onSnapshot } from '@firebase/firestore';
 import { db } from '../../firebase/firebase';
 import { usersService } from '../../services/users/users.service';
+import Dropdown from '../UI/Dropdown/Dropdown';
 
 interface DictionaryListProps {
     onDictionarySelect: (dictionary: iDictionary) => void,
@@ -82,6 +83,7 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDic
         <div className="dictionary-words-counter">
             { dictionarySize ? <p>Words: { dictionarySize } </p> : <p>{ `No words here :(` } </p>}
         </div>
+        <Dropdown list={ dictionaries.map(dictionary => dictionary.name) }></Dropdown>
       </div>
     );
 }

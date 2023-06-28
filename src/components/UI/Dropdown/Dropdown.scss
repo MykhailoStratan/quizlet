@@ -1,0 +1,49 @@
+.dropdown-wrapper {
+    position: relative;
+    width: 350px;
+    height: 50px;
+    border: 1px solid grey;
+    background-color: white;
+    z-index: 200;
+}
+
+.dropdown {
+    &-list-visible {
+        display: inline-block;
+        width: 350px;
+        max-width: 100%;
+        padding: 0px;
+        margin: 0 auto;
+        border: 1px solid grey;
+
+        &-item {
+            &-multiple {
+                text-align: left;
+            }
+
+            &-single {
+                position: absolute;
+                top: 50%;
+                right: 50%;
+                transform: translate(50%, -50%);
+                margin: 0;
+                
+                width: 80%;
+                text-align: center;
+            }
+        }
+    }
+
+    &-list-hidden {
+        visibility: hidden;
+    }
+
+    &-button {
+        position: absolute;
+        top: 50%;
+        transform: translate(0, -50%);
+        right: 5px;
+        
+    }
+    
+}
