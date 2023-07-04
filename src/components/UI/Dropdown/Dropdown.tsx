@@ -1,19 +1,26 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, ReactNode, useEffect, useState } from 'react';
 import './Dropdown.scss';
 
-interface DropdownProps {
-    list: (string | number)[];
-    onClick?: (event: React.MouseEvent<HTMLDivElement>) => void;
+export type DropdownProps = {
+    list: DropdownItem[];
+    onChange?: (targetName: string) => void;
 }
 
-const Dropdown: FC<DropdownProps> = ({list}) => {
+export type DropdownItem = {
+    itemName: any;
+    selected: boolean;
+}
+
+const Dropdown: FC<DropdownProps> = ({list, onChange}) => {
     const [dropdownVisibile, setDropdownVisible] = useState<boolean>(false);
     console.log(list)
-    const [selectedItem, setSelectedItem] = useState<(string|number)>(list[0]);
+    const [selectedItem, setSelectedItem] = useState<DropdownItem | null>(list[0]);
 
-    function handleSelection(item: (string|number)) {
+    function handleSelection(item: DropdownItem) {
         setDropdownVisible(false);
         setSelectedItem(item);
+        onChange ? onChange(item.itemName) : null;
+        console.log(selectedItem)
     };
 
     function switchDropdownVisibilityClass() {
@@ -22,32 +29,28 @@ const Dropdown: FC<DropdownProps> = ({list}) => {
     
     useEffect(
         () => {
-            setSelectedItem(list[0]);
+            const itemToBeSelected = list.find(listItem => listItem.selected === true);
+            setSelectedItem(itemToBeSelected || list[0]);
         }
     , [list]);
 
     return (
-        <div className='dropdown-wrapper'>
-            <p className='dropdown-list-item-single'>{ selectedItem }</p>
-            { dropdownVisibile 
-            ? <ul className={ switchDropdownVisibilityClass() }
-                >
-                
-                     {list.map((element, index) => {
-                        return <li 
-                            className='dropdown-list-item-multiple'
-                            key={ index }>
-                                <button 
-                                    onClick={ () => handleSelection(element) }>{ element }</button>
-                            </li>
-                    })
-                    
-                }
-            </ul>
-            : null }
+        <div 
+            className='dropdown-wrapper'
+            onClick={() => setDropdownVisible(!dropdownVisibile)}>
+                <p className='dropdown-list-item-single'>{ selectedItem?.itemName }</p>
+                { dropdownVisibile 
+                ? <ul className={ switchDropdownVisibilityClass() }
+                   >{ list.map((element, index) => {
+                          return <li 
+                                className='dropdown-list-visible-item-multiple'
+                                key={ index }
+                                onClick={ () => handleSelection(element) }>{ element.itemName }</li>
+                        })
+                    }</ul>
+                : null }
             <button 
-                className='dropdown-button' 
-                onClick={() => setDropdownVisible(!dropdownVisibile)}>▼</button>
+                className='dropdown-button'>▼</button>
         </div>
     );
 }

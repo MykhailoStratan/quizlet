@@ -29,7 +29,7 @@ class DictionaryService {
         if (activeUser) {
             // @ts-ignore
             // todo: try to fix this warning
-            await this.db.updateDocument<{dictionaries: iDictionary[]}>('users', activeUser.firebaseId, {
+            await this.dbActions.updateDocument<{dictionaries: iDictionary[]}>('users', activeUser.firebaseId, {
                 dictionaries: newData,
             });
         }
@@ -82,11 +82,13 @@ class DictionaryService {
 
         const unsubscribe = onSnapshot(collectionRef, {
             next: (snapshot) => {
+                console.log('CURRENT DICTIONARY NAME', currentDictionary.name)
             const updatedData: any = snapshot.docs.find((doc) => doc.data().id === usersService.getActiveUser()!.id);
 
             const dictionaries = updatedData.data().dictionaries;
 
             const activeDictionary = dictionaries.find((dictionary: iDictionary) => dictionary.name === currentDictionary.name)
+            console.log('HERE???', activeDictionary.words.length)
             setDataHook(activeDictionary.words.length);
         }});
 

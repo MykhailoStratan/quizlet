@@ -5,9 +5,6 @@ import AddDictionary from '../AddDictionary/AddDictionary';
 import type { iDictionary } from '../../types/dictionary.type';
 import { dictionaryService } from '../../services/dictionary/dictionary.service';
 import './DictionaryList.scss';
-import { collection, doc, onSnapshot } from '@firebase/firestore';
-import { db } from '../../firebase/firebase';
-import { usersService } from '../../services/users/users.service';
 import Dropdown from '../UI/Dropdown/Dropdown';
 
 interface DictionaryListProps {
@@ -18,22 +15,26 @@ interface DictionaryListProps {
 const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDictionary }) => {
     const [showAddModal, setShowAddModal] = useState<boolean>(false);
     const [dictionaries, setDictionaries] = useState<iDictionary[]>([]);
+    const [selectedDictionary, setSelectedDictionary] = useState<iDictionary>(activeDictionary);
     const [dictionarySize, setDictionarySize] = useState<number | null>(null);
 
-    const handleSelectChange = async (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleSelectChange = async (target: string) => {
         // if (event.currentTarget.value === 'Add new dictionary') {
         //     setShowAddModal(true);
         //     event.currentTarget.value = dictionaries[0].name;
         //     return;
         // } //todo: create option to add new dictionary
+        console.log(target)
+        const dictionaryToSelect = dictionaries.find(dictionary => dictionary.name === target);
 
-        const selectedDictionary = dictionaries.find(dictionary => dictionary.name === event.currentTarget.value);
-
-        if (selectedDictionary) {
-            onDictionarySelect(selectedDictionary);
-
-            const activeDictionaryWords = await dictionaryService.getWordsFromDictionary(selectedDictionary);
-            activeDictionaryWords ? setDictionarySize(activeDictionaryWords.length) : setDictionarySize(null);
+        if (dictionaryToSelect) {
+            onDictionarySelect(dictionaryToSelect);
+            setSelectedDictionary(dictionaryToSelect);
+            
+            const selectedDictionaryWords = await dictionaryService.getWordsFromDictionary(dictionaryToSelect);
+            console.log(selectedDictionaryWords)
+            selectedDictionaryWords ? setDictionarySize(selectedDictionaryWords.length) : setDictionarySize(null);
+            // todo: somewhere here a problem with dictionary size set after adding a new word to a dictionary
         }
     };
 
@@ -46,44 +47,35 @@ const DictionaryList: FC<DictionaryListProps> = ({ onDictionarySelect, activeDic
     useEffect(() => {
         (async () => {
             setDictionaries(await dictionaryService.getDictionaries());
-            setDictionarySize(activeDictionary.words.length);
+            setDictionarySize(selectedDictionary.words.length);
         })();
 
-        dictionaryService.getDictionaryWordsCount(activeDictionary, setDictionarySize);
-    }, [])
+        console.log('SELECTED DICTIONARY', selectedDictionary)
+
+        dictionaryService.getDictionaryWordsCount(selectedDictionary, setDictionarySize);
+    }, [activeDictionary])
 
     return (
       <div className="dictionary">
         <div className="dictionary-list">
-          <select
-              onChange={ handleSelectChange }
-          > // todo: create custom dropdown component
-              { dictionaries.map(dictionary => {
-                if (dictionary.name === activeDictionary.name) {
-                    return <option
-                        key={ dictionary.id }
-                        value={ dictionary.name }
-                        selected
-                    >{ dictionary.name }</option>
-                }
-                  return <option
-                      key={ dictionary.id }
-                      value={ dictionary.name }
-                  >{ dictionary.name }</option>
-              }) }
-              {/*<option*/} //todo: create option to add new dictionary
-              {/*    onSelect={ () => setShowAddModal(true) }*/}
-              {/*    key={ 'default-option' }*/}
-              {/*    value={ 'Add new dictionary' }*/}
-              {/*>Add new dictionary</option>*/}
-          </select>
+            { dictionaries.length 
+            ? <Dropdown 
+                list={dictionaries.map(dictionary => {
+                    if (dictionary.name === activeDictionary.name) {
+                        return {itemName: dictionary.name, selected: true}
+                    } else {
+                      return {itemName: dictionary.name, selected: false}
+                    }
+                    })}
+                onChange={ handleSelectChange }></Dropdown> 
+                : null }
+          
           <Button className={"btn-add-dictionary"} onClick={ () => setShowAddModal(true) }>Add</Button>
           { showAddModal ? <Modal onClick={ onModalClick }><AddDictionary></AddDictionary></Modal> : null }
         </div>
         <div className="dictionary-words-counter">
             { dictionarySize ? <p>Words: { dictionarySize } </p> : <p>{ `No words here :(` } </p>}
         </div>
-        <Dropdown list={ dictionaries.map(dictionary => dictionary.name) }></Dropdown>
       </div>
     );
 }
