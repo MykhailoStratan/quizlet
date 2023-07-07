@@ -12,6 +12,8 @@ import type { iDictionary } from './types/dictionary.type';
 import { usersService } from './services/users/users.service';
 import './App.css'
 import Home from './components/Home/Home';
+import UserInfo from './components/UserInfo/UserInfo';
+import { iUser } from './types/user.type';
 
 const defaultMenu = [ 'Home', 'Learn', 'Add New Words' ];
 
@@ -20,6 +22,7 @@ const App: FC = () => {
     const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'));
 
     const [activeDictionary, setActiveDictionary] = useState<iDictionary | null>();
+    const [activeUser, setActiveUser] = useState<iUser>()
     const [wordInfo, setWordInfo] = useState<iWordInfo | null>(null);
     const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
 
@@ -57,6 +60,7 @@ const App: FC = () => {
         const activeUser = usersService.getActiveUser();
 
         if (activeUser) {
+            setActiveUser(activeUser);
             setActiveDictionary(activeUser.dictionaries[0]);
         } else {
             setActiveDictionary(null);
@@ -101,6 +105,11 @@ const App: FC = () => {
                             </>
                             : null
                     }/>
+                    { activeUser 
+                        ? <Route path="/user" element={
+                            <UserInfo activeUser={ activeUser }/>
+                        }/> 
+                        : null }
                     <Route path="/login" element={
                             !isLogged ? <Login setIsLogged={ setIsLogged }/> : null
                         } />

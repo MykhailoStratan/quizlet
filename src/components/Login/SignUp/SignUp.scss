@@ -1,16 +1,32 @@
 .signup-form {
-  height: 400px;
+  display: grid;
+  grid-template-columns: auto auto;
+  height: 60%;
   box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
   border: none;
   border-radius: 10px;
+  align-content: center;
 
   & label {
     color: #65656a;
+    text-align: start;
+    margin-right: 10px;
   }
 
   &-error {
     color: red;
     background-color: #2d2d2d;
     margin: 0 50px;
+  }
+
+  & button {
+    position: absolute;
+    right: 50%;
+    bottom: -12%;
+    transform: translate(50%, 0);
+  }
+
+  &-required-field {
+    color: red;
   }
 }

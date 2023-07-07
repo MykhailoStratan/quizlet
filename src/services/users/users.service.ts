@@ -7,11 +7,11 @@ class UsersService {
     private activeUser: iUser | null = null;
 
     private validateUser(user: iUser) {
-        if (user.name
-            && user.id
+        if (user.id
             && user.email
             && user.firebaseId
             && user.dictionaries
+            && user.language
         ) {
             return true;
         }

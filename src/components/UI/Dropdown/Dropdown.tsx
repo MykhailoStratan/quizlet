@@ -4,6 +4,7 @@ import './Dropdown.scss';
 export type DropdownProps = {
     list: DropdownItem[];
     onChange?: (targetName: string) => void;
+    className?: string;
 }
 
 export type DropdownItem = {
@@ -11,7 +12,7 @@ export type DropdownItem = {
     selected: boolean;
 }
 
-const Dropdown: FC<DropdownProps> = ({list, onChange}) => {
+const Dropdown: FC<DropdownProps> = ({list, onChange, className}) => {
     const [dropdownVisibile, setDropdownVisible] = useState<boolean>(false);
     console.log(list)
     const [selectedItem, setSelectedItem] = useState<DropdownItem | null>(list[0]);
@@ -36,7 +37,7 @@ const Dropdown: FC<DropdownProps> = ({list, onChange}) => {
 
     return (
         <div 
-            className='dropdown-wrapper'
+            className={ `dropdown-wrapper ${className}` }
             onClick={() => setDropdownVisible(!dropdownVisibile)}>
                 <p className='dropdown-list-item-single'>{ selectedItem?.itemName }</p>
                 { dropdownVisibile 

@@ -16,7 +16,12 @@ const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) =
 
     return (
         <div className="logout-wrapper">
-            <div>{ usersService.getActiveUser()?.email }</div>
+            <img 
+                className="logout-user-edit" 
+                src="../../../../public/icons8-edit-64.png" 
+                alt="edit user" 
+                onClick={ () => navigate('/user') }/>
+            <div className="logout-email">{ usersService.getActiveUser()?.email }</div>
             <Button onClick={ () => onLogOut() }>Log Out</Button>
         </div>
     );

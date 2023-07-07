@@ -1,0 +1,33 @@
+.user-form {
+    display: grid;
+    align-content: center;
+    grid-template-columns: auto auto auto auto;
+    grid-template-rows: auto auto auto;
+    width: auto;
+    padding: 10px;
+    padding-right: 50px;
+
+    & label {
+        width: 150px;
+        text-align: end;
+        margin-right: 10px;
+    }
+
+    &-language-dropdown {
+        top: -7px;
+        height: 35px;
+        width: 220px;
+        border-radius: 5px;
+
+        p {
+           height: 100%;
+           line-height: 250%;
+           margin: 0;
+        }
+    }
+
+    &-button {
+        position: relative;
+        grid-column: auto / span 2;
+    }
+}
