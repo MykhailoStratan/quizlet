@@ -33,7 +33,12 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
 
     return (
         <div className="menu">
-            <ul>
+            <div className="menu-burger">
+                <input type="checkbox"/>
+                <span></span>
+                <span></span>
+                <span></span>
+                <ul>
                 { menu.map(option => {
                     return <Link
                         to={ '/' + option.name.toLowerCase().replaceAll(' ', '-') }
@@ -50,6 +55,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
                     </Link>
                 }) }
             </ul>
+            </div>
         </div>
     );
 }
