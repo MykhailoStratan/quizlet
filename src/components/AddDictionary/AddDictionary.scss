@@ -10,6 +10,7 @@ form {
   background-color: #ffe7ce;
   height: 20rem;
   width: 25rem;
+  max-width: 85%;
   border-radius: 20px;
 }
 
@@ -27,6 +28,7 @@ input {
   width: 200px;
   color: black;
   padding: 10px;
+  font-size: 16px;
 
   &:focus {
     outline: none;
@@ -35,5 +37,4 @@ input {
 
 .error {
   color: #e76666;
-
 }

@@ -67,7 +67,7 @@
   top: 200px;
 }
 
-@media (720px <= width <= 1300px) {
+@media screen and (min-width: 720px) and (max-width: 1300px) {
   .btn-show-word-info-hidden {
     top: 600px;
     left: 50%;
@@ -80,4 +80,33 @@
     transform: translate(-50%, 0%);
     border-radius: 5px !important;
   }
+}
+
+@media screen and (max-width: 720px) {
+  .btn-show-word-info-hidden {
+    top: 550px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    transition: 0.7s ease-out;
+  }
+
+  .btn-show-word-info {
+    top: 450px;
+    z-index: 100;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    border-radius: 5px !important;
+    transition: 0.7s ease-in;
+  }
+
+  ul {
+    padding-left: 10px;
+
+    &.word-definition {
+      li {
+        padding-left: 10px;
+      }
+    }
+  }
+  
 }

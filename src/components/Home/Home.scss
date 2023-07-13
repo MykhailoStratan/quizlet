@@ -8,3 +8,13 @@
     margin: 50px;
   }
 }
+
+@media screen and (max-width: 720px) {
+  .home {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+  }
+}

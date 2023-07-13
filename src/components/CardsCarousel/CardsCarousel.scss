@@ -6,7 +6,7 @@
   gap: 50px;
   justify-content: center;
   align-items: center;
-  transition: 1s ease-in;
+  transition: 0.7s ease-out;
 
   &-word-info-shown {
     position: absolute;
@@ -15,7 +15,7 @@
     gap: 50px;
     justify-content: center;
     align-items: center;
-    transition: 1s ease-in;
+    transition: 0.7s ease-in;
   }
 }
 
@@ -46,7 +46,17 @@
   }
 }
 
-@media (720px <= width <= 1300px) {
+@media screen and (min-width: 720px) and (max-width: 1300px) {
+  .card-container {
+    width: 0rem;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .carousel {
+    top: 300px;
+  }
+
   .card-container {
     width: 0rem;
   }

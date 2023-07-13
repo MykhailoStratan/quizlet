@@ -30,25 +30,27 @@ const UserInfo: FC<{ activeUser: iUser }> = ({ activeUser }) => {
     };
 
     return (
-        <div className='user-form-wrapper'>
-            <form className='user-form'>
-                <label htmlFor="name">User Name:</label>
-                <input id="name" type="text" value={activeUser.name}/>
-                <label htmlFor="surname">Surname:</label>
-                <input id="surname" type="text" value={activeUser.surname}/>
-                <label htmlFor="email">Email:</label>
-                <input id="email" type="email" value={activeUser.email}/>
-                <label htmlFor="password">Password:</label>
-                <input id="password" type="password" value={'********'}/>
-                <label htmlFor="phone">Phone Number</label>
-                <input id="phone" type="tel" value={activeUser.phone}/>
-                <label htmlFor="language">Language:</label>
-                <Dropdown className="user-form-language-dropdown" list={ languageOptions }/>
-                {/* <input id="language" type="text" value={activeUser.language}/> */}
-                <Button className="user-form-button">Update</Button>
-            </form>
-            
-        </div>
+        <>
+            <h3>User Information:</h3>
+            <div className='user-form-wrapper'>
+                <form className='user-form'>
+                    <label htmlFor="name">User Name:</label>
+                    <input id="name" type="text" value={activeUser.name}/>
+                    <label htmlFor="surname">Surname:</label>
+                    <input id="surname" type="text" value={activeUser.surname}/>
+                    <label htmlFor="email">Email:</label>
+                    <input id="email" type="email" value={activeUser.email}/>
+                    <label htmlFor="password">Password:</label>
+                    <input id="password" type="password" value={'********'}/>
+                    <label htmlFor="phone">Phone Number</label>
+                    <input id="phone" type="tel" value={activeUser.phone}/>
+                    <label htmlFor="language">Language:</label>
+                    <Dropdown className="user-form-language-dropdown" list={ languageOptions }/>
+                    {/* <input id="language" type="text" value={activeUser.language}/> */}
+                    <Button className="user-form-button">Update</Button>
+                </form>
+            </div>
+        </>
     );
 };
 

@@ -12,6 +12,7 @@
 
 .dropdown {
     &-list-visible {
+        position: relative;
         display: inline-block;
         width: 250px;
         max-width: 100%;
@@ -23,6 +24,7 @@
         background-color: #ffe7ce;
         animation: none;
         padding: 12px 0;
+        z-index: 100;
 
         &-item {
             &-multiple {
@@ -56,7 +58,6 @@
         color: #65656a;
         border: none;
         font-size: 14px;
-        
     }
     
 }

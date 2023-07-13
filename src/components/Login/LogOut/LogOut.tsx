@@ -1,5 +1,6 @@
 import './LogOut.scss';
-import imgUrl from '../../../assets/icons8-edit-64.png'
+import editUserImgUrl from '../../../assets/icons8-edit-64.png'
+import logOutImgUrl from '../../../assets/logout-svgrepo-com.svg'
 import React, { FC } from 'react';
 import Button from '../../UI/Button/Button';
 import { usersService } from '../../../services/users/users.service';
@@ -19,11 +20,14 @@ const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) =
         <div className="logout-wrapper">
             <img 
                 className="logout-user-edit" 
-                src={imgUrl}
+                src={ editUserImgUrl }
                 alt="edit user" 
                 onClick={ () => navigate('/user') }/>
             <div className="logout-email">{ usersService.getActiveUser()?.email }</div>
-            <Button onClick={ () => onLogOut() }>Log Out</Button>
+            <Button className="logout-btn-text" onClick={ () => onLogOut() }>Log Out</Button>
+            <Button className="logout-btn-img" onClick={ () => onLogOut() }>
+                <img src={ logOutImgUrl } alt="Log Out" />
+            </Button>
         </div>
     );
 }

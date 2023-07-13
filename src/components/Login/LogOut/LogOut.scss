@@ -5,3 +5,27 @@
 .logout-user-edit:hover {
     cursor: pointer;
 }
+
+.logout-wrapper {
+    .logout-btn-text {
+        display: inherit;
+    }
+    .logout-btn-img {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .logout-wrapper {
+        right: 15px !important;
+        z-index: 300;
+    
+        .logout-btn-text {
+            display: none;
+        }
+        .logout-btn-img {
+            display: inherit;
+            height: auto;
+        }
+    }
+}

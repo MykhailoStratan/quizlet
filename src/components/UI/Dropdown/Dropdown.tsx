@@ -51,7 +51,8 @@ const Dropdown: FC<DropdownProps> = ({list, onChange, className}) => {
                     }</ul>
                 : null }
             <button 
-                className='dropdown-button'>▼</button>
+                className='dropdown-button'
+                type="button">▼</button>
         </div>
     );
 }

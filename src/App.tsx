@@ -15,7 +15,7 @@ import Home from './components/Home/Home';
 import UserInfo from './components/UserInfo/UserInfo';
 import { iUser } from './types/user.type';
 
-const defaultMenu = [ 'Home', 'Learn', 'Add New Words' ];
+const defaultMenu = [ 'Home', 'Learn', 'Add New Words', 'User' ];
 
 const App: FC = () => {
     const [menu, setMenu] = useState(defaultMenu);
@@ -72,7 +72,7 @@ const App: FC = () => {
     return (
         <div className="App">
             <Router basename="/quizlet">
-                <Menu menuOptions={ menu }></Menu>
+                <Menu menuOptions={ menu } logOutSetter={ setIsLogged }></Menu>
                 <Routes>
                     <Route path="/" element={ <Home isLogged={ isLogged }/>} />
                     <Route path="/home" element={ <Home isLogged={ isLogged }/> } />

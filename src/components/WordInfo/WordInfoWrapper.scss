@@ -3,6 +3,11 @@
   100% { width: 800px; height: 800px}
 }
 
+@keyframes rollout-small-screen {
+  0% { width: 0%; height: 100px;}
+  100% { width: 80%; height: 800px}
+}
+
 .word-info-wrapper {
   position: absolute;
   left: 35px;
@@ -24,11 +29,21 @@
 }
 
 
-@media (720px <= width <= 1300px) {
+@media screen and (min-width: 720px) and (max-width: 1300px) {
   .word-info-wrapper {
     top: 650px;
-    // width: 700px;
+    max-width: 80%;
     left: 50%;
     transform: translate(-50%, 0%);
+  }
+}
+
+@media screen and (max-width: 720px) {
+  .word-info-wrapper {
+    top: 500px;
+    width: 80%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    animation: rollout-small-screen 0.5s;
   }
 }
