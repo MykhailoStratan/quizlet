@@ -2,15 +2,14 @@ import { FC, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import './Menu.scss';
-import LogOut from '../Login/LogOut/LogOut';
 
 interface MenuProps {
     menuOptions: string[];
-    logOutSetter: (newState: boolean) => void;
 }
 
-const Menu: FC<MenuProps> = ({ menuOptions, logOutSetter }) => {
+const Menu: FC<MenuProps> = ({ menuOptions }) => {
     const [activeOption, setActiveOption] = useState<string>(menuOptions[0]);
+    const [backgroundBlur, setBackgroundBlur] = useState<boolean>(false);
 
     const menu = menuOptions.map((option, index) => {
         return {
@@ -26,8 +25,12 @@ const Menu: FC<MenuProps> = ({ menuOptions, logOutSetter }) => {
         const formattedLocation = currentLocation.toLowerCase().replaceAll(' ', '-')
         const formattedMenuOption = menuOption.toLowerCase().replaceAll(' ', '-')
 
-        return  formattedMenuOption === formattedLocation ? 'menu-option active' : 'menu-option';
+        return formattedMenuOption === formattedLocation ? 'menu-option active' : 'menu-option';
     };
+
+    const switchBackgroundBlur = () => {
+        return setBackgroundBlur(!backgroundBlur);
+    }
 
     const setMenuOptionActive = (menuOption: string) => {
         setActiveOption(menuOption);
@@ -36,8 +39,8 @@ const Menu: FC<MenuProps> = ({ menuOptions, logOutSetter }) => {
     return (
         <div className="menu">
             <div className="menu-burger">
-                <input type="checkbox"/>
-                <div className="menu-burger-background"></div>
+                <input type="checkbox" onClick={ () => switchBackgroundBlur() } checked={ backgroundBlur }/>
+                <div className={ backgroundBlur ? "menu-burger-background" : "menu-burger-background-hidden" }></div>
                 <span></span>
                 <span></span>
                 <span></span>
@@ -52,7 +55,7 @@ const Menu: FC<MenuProps> = ({ menuOptions, logOutSetter }) => {
                                 id={ option.id.toString() }
                             ><Button
                                 className={ getMenuOptionClassName(option.name) }
-                                onClick={ () => setMenuOptionActive(option.name) }
+                                onClick={ () => {setMenuOptionActive(option.name), switchBackgroundBlur()} }
                             >{ option.name }</Button>
                             </li>
                         </Link>

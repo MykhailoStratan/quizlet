@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import Menu from './components/Menu/Menu';
 import CardsCarousel from './components/CardsCarousel/CardsCarousel';
@@ -14,15 +14,24 @@ import './App.css'
 import Home from './components/Home/Home';
 import UserInfo from './components/UserInfo/UserInfo';
 import { iUser } from './types/user.type';
+import AddDictionary from './components/AddDictionary/AddDictionary';
+import { useDispatch, useSelector } from 'react-redux';
+import { setLoggedIn } from './store/actions/loginActions';
+import { RootState } from './store/store';
 
-const defaultMenu = [ 'Home', 'Learn', 'Add New Words', 'User' ];
+const defaultMenu = [ 'Home', 'Learn', 'User' ];
 
 const App: FC = () => {
-    const [menu, setMenu] = useState(defaultMenu);
-    const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'));
+    const dispatch = useDispatch();
+    
 
-    const [activeDictionary, setActiveDictionary] = useState<iDictionary | null>();
-    const [activeUser, setActiveUser] = useState<iUser>()
+    const isLogged = useSelector((state: RootState) => state.login.isLogged);
+    
+    const [menu, setMenu] = useState(defaultMenu);
+    // const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'));
+
+    const [activeDictionary, setActiveDictionary] = useState<iDictionary | null>(null);
+    const [activeUser, setActiveUser] = useState<iUser>();
     const [wordInfo, setWordInfo] = useState<iWordInfo | null>(null);
     const [showWordInfo, setShowWordInfo] = useState<boolean>(false);
 
@@ -51,6 +60,7 @@ const App: FC = () => {
     }
 
     useEffect(() => {
+        !!localStorage.getItem('user') ?? dispatch(setLoggedIn());
         (async () => {
             await usersService.updateUsers();
 
@@ -66,13 +76,12 @@ const App: FC = () => {
             setActiveDictionary(null);
         }
 
-
     },[isLogged])
 
     return (
         <div className="App">
             <Router basename="/quizlet">
-                <Menu menuOptions={ menu } logOutSetter={ setIsLogged }></Menu>
+                <Menu menuOptions={ menu }></Menu>
                 <Routes>
                     <Route path="/" element={ <Home isLogged={ isLogged }/>} />
                     <Route path="/home" element={ <Home isLogged={ isLogged }/> } />
@@ -88,14 +97,14 @@ const App: FC = () => {
                                     className={ showWordInfo ? 'word-info-shown' : '' }
                                 />
                                 { wordInfo ? <WordInfo
-                                    wordInfo={ wordInfo } // todo: subscription for words to receive updates?
+                                    wordInfo={ wordInfo }
                                     isShowWordInfo={ showWordInfo }
                                     onShowWordInfoChange={ isWordInfoShown }
                                 ></WordInfo> : null }
                             </>
                             : null
                     }/>
-                    <Route path="/add-new-words" element={
+                    <Route path="/add-new-word" element={
                         activeDictionary
                             ? <>
                                 <DictionaryList 
@@ -105,16 +114,26 @@ const App: FC = () => {
                             </>
                             : null
                     }/>
+                    <Route path="/add-new-dictionary" element={
+                        activeDictionary
+                            ? <>
+                                <DictionaryList 
+                                    onDictionarySelect={ onSelectActiveDictionary }
+                                    activeDictionary={ activeDictionary } />
+                                <AddDictionary />
+                            </>
+                            : null
+                    }/>
                     { activeUser 
                         ? <Route path="/user" element={
                             <UserInfo activeUser={ activeUser }/>
                         }/> 
                         : null }
                     <Route path="/login" element={
-                            !isLogged ? <Login setIsLogged={ setIsLogged }/> : null
+                            !isLogged ? <Login/> : null
                         } />
                 </Routes>
-                { isLogged ? <LogOut setIsLogged={ setIsLogged }/> : null }
+                { isLogged ? <LogOut/> : null }
             </Router>
         </div>
     );

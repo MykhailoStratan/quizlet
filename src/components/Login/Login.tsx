@@ -4,21 +4,20 @@ import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
 import { usersService } from '../../services/users/users.service';
 import './Login.scss';
+import { useDispatch } from 'react-redux';
+import { setLoggedIn } from '../../store/actions/loginActions';
 
 const DISPLAY_OPTIONS = {
     SIGN_IN: 'signin',
     SIGN_UP: 'signup',
 };
 
-interface LoginProps {
-    setIsLogged: (newState: boolean) => void;
-}
-
-const Login: FC<LoginProps> = ({setIsLogged}) => {
+const Login: FC = () => {
+    const dispatch = useDispatch();
     const [displayOption, setDisplayOption] = useState(DISPLAY_OPTIONS.SIGN_IN);
 
     const onUserData = (userResponseData: any) => {
-        setIsLogged(true);
+        dispatch(setLoggedIn());
         usersService.setActiveUserByEmail(userResponseData.email);
     }
 

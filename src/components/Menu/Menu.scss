@@ -1,7 +1,7 @@
 .menu {
   position: absolute;
   top: 0px;
-  left: 0px;
+  left: 35px;
 
   input {
     display: none;
@@ -9,6 +9,8 @@
 
   ul {
     margin-top: 30px;
+    padding: 0;
+    display: flex;
 
     li {
       display: inline-block;
@@ -20,6 +22,7 @@
         background-color: #ffe7ce;
         border: transparent;
         border-radius: 5px;
+        width: 5rem;
 
         &.active {
           background-color: #ffbd77;
@@ -33,6 +36,7 @@
   .menu {
     width: 90%;
     z-index: 300;
+    left: 0px;
     
     ul {
       visibility: hidden;
@@ -46,6 +50,7 @@
       background-color: #ffe7ce;
       border-radius: 10px; 
       margin: 25px auto;
+      flex-direction: column;
 
       li {
         display: block;
@@ -69,6 +74,10 @@
     background-color: rgba(110, 110, 110, 0.4);
     backdrop-filter: blur(15px);
     z-index: -1;
+  }
+
+  input:checked ~ .menu-burger-background-hidden {
+    display: none;
   }
 
   .menu-burger {

@@ -6,13 +6,16 @@ import Button from '../../UI/Button/Button';
 import { usersService } from '../../../services/users/users.service';
 import { authService } from '../../../services/auth/auth.service';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setLoggedOut } from '../../../store/actions/loginActions';
 
-const LogOut: FC<{setIsLogged: (newState: boolean) => void}> = ({setIsLogged}) => {
+const LogOut: FC = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const onLogOut = () => {
         authService.logOut();
-        setIsLogged(false);
+        dispatch(setLoggedOut());;
         navigate('/login');
     };
 
