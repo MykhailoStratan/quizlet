@@ -5,7 +5,7 @@ interface LoginState {
 }
   
 const initialState: LoginState = {
-    isLogged: false,
+    isLogged: !!localStorage.getItem('user'),
 };
 
 const loginReducer: Reducer<LoginState, AnyAction> = (state = initialState, action) => {

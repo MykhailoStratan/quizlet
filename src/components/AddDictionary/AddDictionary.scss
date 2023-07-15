@@ -1,5 +1,5 @@
 form {
-  position: fixed;
+  position: absolute;
   top: 200px;
   left: 50%;
   transform: translate(-50%);
@@ -8,6 +8,7 @@ form {
   flex-direction: column;
   align-items: center;
   background-color: #ffe7ce;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 1px 3px;
   height: 20rem;
   width: 25rem;
   max-width: 85%;

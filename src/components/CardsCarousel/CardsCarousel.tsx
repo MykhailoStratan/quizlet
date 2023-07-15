@@ -17,7 +17,6 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     const [cards, setCards] = useState<iWord[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iWord>();
-    console.log(dictionary)
 
     const prevBtn = useRef<HTMLElement | null>(null);
     const nextBtn = useRef<HTMLElement | null>(null);
@@ -72,7 +71,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                 setCards([]);
             }
         })();
-    },[dictionary])
+    }, [dictionary])
 
     useEffect(() => {
         (async () => {

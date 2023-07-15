@@ -15,14 +15,12 @@ import Home from './components/Home/Home';
 import UserInfo from './components/UserInfo/UserInfo';
 import { iUser } from './types/user.type';
 import AddDictionary from './components/AddDictionary/AddDictionary';
-import { useDispatch, useSelector } from 'react-redux';
-import { setLoggedIn } from './store/actions/loginActions';
+import { useSelector } from 'react-redux';
 import { RootState } from './store/store';
 
 const defaultMenu = [ 'Home', 'Learn', 'User' ];
 
 const App: FC = () => {
-    const dispatch = useDispatch();
     const isLogged = useSelector((state: RootState) => state.login.isLogged);
     
     const [menu, setMenu] = useState(defaultMenu);
@@ -58,7 +56,6 @@ const App: FC = () => {
     }
 
     useEffect(() => {
-        !!localStorage.getItem('user') ?? dispatch(setLoggedIn());
         (async () => {
             await usersService.updateUsers();
 

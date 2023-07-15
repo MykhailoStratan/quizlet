@@ -13,13 +13,10 @@ const Home: FC<{isLogged: boolean}> = ({isLogged}) => {
     return (
         <>
             <div className="home">
-                Welcome to Quizlet!
+                Welcome to LingoFlips!
             </div>
             <Button className="home-nav-btn" onClick={onCLick}>{ isLogged ? 'Go Learn!' : 'Go to Login' }</Button>
         </>
-
-
-
     );
 };
 

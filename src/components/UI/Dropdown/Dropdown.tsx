@@ -1,4 +1,4 @@
-import { FC, ReactNode, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import './Dropdown.scss';
 
 export type DropdownProps = {
@@ -14,14 +14,12 @@ export type DropdownItem = {
 
 const Dropdown: FC<DropdownProps> = ({list, onChange, className}) => {
     const [dropdownVisibile, setDropdownVisible] = useState<boolean>(false);
-    console.log(list)
     const [selectedItem, setSelectedItem] = useState<DropdownItem | null>(list[0]);
 
     function handleSelection(item: DropdownItem) {
         setDropdownVisible(false);
         setSelectedItem(item);
         onChange ? onChange(item.itemName) : null;
-        console.log(selectedItem)
     };
 
     function switchDropdownVisibilityClass() {

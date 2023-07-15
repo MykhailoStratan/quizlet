@@ -17,15 +17,8 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
 
     const menu = useSelector((state: RootState) => state.menu.options);
 
-    const [activeOption, setActiveOption] = useState<string>(menuOptions[0]);
+    // const [activeOption, setActiveOption] = useState<string>(menuOptions[0]);
     const [backgroundBlur, setBackgroundBlur] = useState<boolean>(false);
-
-    // const menu = menuOptions.map((option, index) => {
-    //     return {
-    //         name: option,
-    //         id: index,
-    //     }
-    // });
 
     const location = useLocation();
 
@@ -41,9 +34,9 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
         return setBackgroundBlur(!backgroundBlur);
     }
 
-    const setMenuOptionActive = (menuOption: string) => {
-        setActiveOption(menuOption);
-    };
+    // const setMenuOptionActive = (menuOption: string) => {
+    //     setActiveOption(menuOption);
+    // };
 
     return (
         <div className="menu">
@@ -64,7 +57,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
                                 id={ index.toString() }
                             ><Button
                                 className={ getMenuOptionClassName(option) }
-                                onClick={ () => {setMenuOptionActive(option), switchBackgroundBlur()} }
+                                onClick={ () => { switchBackgroundBlur() } }
                             >{ option }</Button>
                             </li>
                         </Link>
