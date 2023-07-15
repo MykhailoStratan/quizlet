@@ -78,7 +78,7 @@ const App: FC = () => {
 
     return (
         <div className="App">
-            <Router basename="/quizlet">
+            <Router basename="/">
                 <Menu menuOptions={ menu }></Menu>
                 <Routes>
                     <Route path="/" element={ <Home isLogged={ isLogged }/>} />
