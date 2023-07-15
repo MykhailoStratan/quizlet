@@ -2,21 +2,30 @@ import { FC, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Button from '../UI/Button/Button';
 import './Menu.scss';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../store/store';
+import { setDefaultMenu, setLoginMenu } from '../../store/actions/menuActions';
 
 interface MenuProps {
     menuOptions: string[];
 }
 
 const Menu: FC<MenuProps> = ({ menuOptions }) => {
+    const dispatch = useDispatch();
+    const isLogged = useSelector((state: RootState) => state.login.isLogged);
+    isLogged ? dispatch(setDefaultMenu()) : dispatch(setLoginMenu());
+
+    const menu = useSelector((state: RootState) => state.menu.options);
+
     const [activeOption, setActiveOption] = useState<string>(menuOptions[0]);
     const [backgroundBlur, setBackgroundBlur] = useState<boolean>(false);
 
-    const menu = menuOptions.map((option, index) => {
-        return {
-            name: option,
-            id: index,
-        }
-    });
+    // const menu = menuOptions.map((option, index) => {
+    //     return {
+    //         name: option,
+    //         id: index,
+    //     }
+    // });
 
     const location = useLocation();
 
@@ -45,18 +54,18 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
                 <span></span>
                 <span></span>
                 <ul>
-                    { menu.map(option => {
+                    { menu.map((option, index) => {
                         return <Link
-                            to={ '/' + option.name.toLowerCase().replaceAll(' ', '-') }
-                            key={ option.id }
+                            to={ '/' + option.toLowerCase().replaceAll(' ', '-') }
+                            key={ index }
                         >
                             <li
-                                key={ option.id }
-                                id={ option.id.toString() }
+                                key={ index }
+                                id={ index.toString() }
                             ><Button
-                                className={ getMenuOptionClassName(option.name) }
-                                onClick={ () => {setMenuOptionActive(option.name), switchBackgroundBlur()} }
-                            >{ option.name }</Button>
+                                className={ getMenuOptionClassName(option) }
+                                onClick={ () => {setMenuOptionActive(option), switchBackgroundBlur()} }
+                            >{ option }</Button>
                             </li>
                         </Link>
                     }) }    

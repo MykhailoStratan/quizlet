@@ -23,8 +23,6 @@ const defaultMenu = [ 'Home', 'Learn', 'User' ];
 
 const App: FC = () => {
     const dispatch = useDispatch();
-    
-
     const isLogged = useSelector((state: RootState) => state.login.isLogged);
     
     const [menu, setMenu] = useState(defaultMenu);
