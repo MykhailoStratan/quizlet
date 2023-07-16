@@ -1,0 +1,25 @@
+@keyframes move-text-color {
+    0% {
+        bottom: -0.2em;
+        opacity: 1;
+        color: #ffbd77;
+    }
+
+    50% {
+        bottom: 0.2em;
+        color: #ff6f00;
+    }
+
+    100% {
+        bottom: 0;
+        opacity: 1;
+        color: #65656a;
+    }
+}
+
+span span {
+    position: relative;
+    animation: move-text-color 0.75s forwards;
+    bottom: -1em;
+    opacity: 0;
+}
