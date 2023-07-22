@@ -1,5 +1,4 @@
 import { FC, useEffect, useState } from 'react';
-import type { iWord } from '../../../types/card.type';
 import './CardsMock.scss';
 
 const wordsMock: string[] = ['Butterfly', 'Mariposa', 'Schmetterling', '나비', 'Fjäril', 'バタフライ']
@@ -59,7 +58,6 @@ const CardsMock: FC = () =>  {
         >
             <div
                 className={ cardInnerClassName() }
-                onClick={ flipCard }
             >
                 <div className="card front">
                     <div className="card-body">
