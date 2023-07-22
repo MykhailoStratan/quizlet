@@ -21,6 +21,14 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
     const prevBtn = useRef<HTMLElement | null>(null);
     const nextBtn = useRef<HTMLElement | null>(null);
 
+    const slideButtonClassName = (buttonSide: 'prev' | 'next') => {
+        if (buttonSide === 'prev') {
+            return cardIndex === 0 ? 'btn-blocked' : '';
+        } else if (buttonSide === 'next') {
+            return cardIndex === cards.length - 1 ? 'btn-blocked' : '';
+        }
+    };
+
     const slideLeft = () => {
         if (cardIndex <= 0) {
             setCurrentCard(cards[0]);
@@ -89,6 +97,7 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                 tabIndex={ 0 }
             >
                 <div className="card-container">
+                    <div className="card-counter">{ (cardIndex + 1) + " / " + cards.length }</div>
                     { cards.map((card, index) => {
                         let position = (index > cardIndex)
                             ? "nextCard"
@@ -97,11 +106,17 @@ const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange
                                 : 'prevCard';
                         if (position === 'activeCard') {
                             return <div key={ card.id }>
-                                <Card { ...card } cardStyle={ position } key={ card.id }>
-                                    <Button className="btn btn-prev" onClick={ slideLeft } ref={ prevBtn }>Previous</Button>
-                                    <Button className="btn btn-next" onClick={ slideRight } ref={ nextBtn }>Next</Button>
-                                </Card>
-                            </div>
+                                        <Card { ...card } cardStyle={ position } key={ card.id }>
+                                            <Button 
+                                                className={ `btn btn-prev ` + slideButtonClassName('prev') } 
+                                                onClick={ slideLeft } 
+                                                ref={ prevBtn }>Previous</Button>
+                                            <Button 
+                                                className={ `btn btn-next ` + slideButtonClassName('next') } 
+                                                onClick={ slideRight } 
+                                                ref={ nextBtn }>Next</Button>
+                                        </Card>
+                                    </div>
                         } else {
                             return <Card {...card} cardStyle={ position } key={ card.id }></Card>
                         }

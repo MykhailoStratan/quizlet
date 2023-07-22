@@ -6,11 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../store/store';
 import { setDefaultMenu, setLoginMenu } from '../../store/actions/menuActions';
 
-interface MenuProps {
-    menuOptions: string[];
-}
-
-const Menu: FC<MenuProps> = ({ menuOptions }) => {
+const Menu: FC = () => {
     const dispatch = useDispatch();
     const isLogged = useSelector((state: RootState) => state.login.isLogged);
     isLogged ? dispatch(setDefaultMenu()) : dispatch(setLoginMenu());
@@ -30,9 +26,13 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
         return formattedMenuOption === formattedLocation ? 'menu-option active' : 'menu-option';
     };
 
-    const switchBackgroundBlur = () => {
-        return setBackgroundBlur(!backgroundBlur);
-    }
+    const enableBackgroundBlur = () => {
+        return setBackgroundBlur(true);
+    };
+
+    const disableBackgroundBlur = () => {
+        return setBackgroundBlur(false);
+    };
 
     // const setMenuOptionActive = (menuOption: string) => {
     //     setActiveOption(menuOption);
@@ -41,7 +41,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
     return (
         <div className="menu">
             <div className="menu-burger">
-                <input type="checkbox" onClick={ () => switchBackgroundBlur() } checked={ backgroundBlur }/>
+                <input type="checkbox" onClick={ () => enableBackgroundBlur() } checked={ backgroundBlur }/>
                 <div className={ backgroundBlur ? "menu-burger-background" : "menu-burger-background-hidden" }></div>
                 <span></span>
                 <span></span>
@@ -57,7 +57,7 @@ const Menu: FC<MenuProps> = ({ menuOptions }) => {
                                 id={ index.toString() }
                             ><Button
                                 className={ getMenuOptionClassName(option) }
-                                onClick={ () => { switchBackgroundBlur() } }
+                                onClick={ () => disableBackgroundBlur() }
                             >{ option }</Button>
                             </li>
                         </Link>

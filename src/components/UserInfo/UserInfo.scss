@@ -47,11 +47,10 @@ h3 {
         height: auto;
         grid-template-columns: auto auto;
         grid-template-rows: auto auto auto;
+        padding: 40px 12px;
 
         &-button {
-
             bottom: -50px;
-
         }
     }
 }

@@ -5,9 +5,10 @@ import './Card.scss';
 interface CardProps extends iWord {
     cardStyle: string;
     children?: any;
+    // dictionaryLength: string;
 }
 
-const Card: FC<CardProps> = ({ id, word, translation , cardStyle='', children }) =>  {
+const Card: FC<CardProps> = ({ id, word, translation, cardStyle='', children }) =>  {
     const [flipped, setFlipped] = useState(true);
 
     useEffect(() => {

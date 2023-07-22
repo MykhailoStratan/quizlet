@@ -1,5 +1,9 @@
 import { FC, useEffect, useState } from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { usersService } from './services/users/users.service';
+import { RootState } from './store/store';
+
 import Menu from './components/Menu/Menu';
 import CardsCarousel from './components/CardsCarousel/CardsCarousel';
 import DictionaryList from './components/DictionaryList/DictionaryList';
@@ -7,24 +11,18 @@ import AddCard from './components/AddCard/AddCard';
 import WordInfo from './components/WordInfo/WordInfo';
 import Login from './components/Login/Login';
 import LogOut from './components/Login/LogOut/LogOut';
-import type { iWordInfo } from './types/word-info.type';
-import type { iDictionary } from './types/dictionary.type';
-import { usersService } from './services/users/users.service';
-import './App.css'
 import Home from './components/Home/Home';
 import UserInfo from './components/UserInfo/UserInfo';
-import { iUser } from './types/user.type';
 import AddDictionary from './components/AddDictionary/AddDictionary';
-import { useSelector } from 'react-redux';
-import { RootState } from './store/store';
 
-const defaultMenu = [ 'Home', 'Learn', 'User' ];
+import type { iWordInfo } from './types/word-info.type';
+import type { iDictionary } from './types/dictionary.type';
+import type { iUser } from './types/user.type';
+
+import './App.css'
 
 const App: FC = () => {
     const isLogged = useSelector((state: RootState) => state.login.isLogged);
-    
-    const [menu, setMenu] = useState(defaultMenu);
-    // const [isLogged, setIsLogged] = useState(!!localStorage.getItem('user'));
 
     const [activeDictionary, setActiveDictionary] = useState<iDictionary | null>(null);
     const [activeUser, setActiveUser] = useState<iUser>();
@@ -37,11 +35,6 @@ const App: FC = () => {
             setWordInfo(null);
         }
     };
-
-    const getMenuOptions = () => {
-        const result = usersService.getActiveUser() ? defaultMenu : ['Home', 'Login'];
-        return result;
-    }
 
     function onCurrentWordChange(wordData: iWordInfo | null) {
         if (wordData) {
@@ -58,8 +51,6 @@ const App: FC = () => {
     useEffect(() => {
         (async () => {
             await usersService.updateUsers();
-
-            setMenu(getMenuOptions());
         })();
 
         const activeUser = usersService.getActiveUser();
@@ -76,7 +67,7 @@ const App: FC = () => {
     return (
         <div className="App">
             <Router basename="/">
-                <Menu menuOptions={ menu }></Menu>
+                <Menu/>
                 <Routes>
                     <Route path="/" element={ <Home isLogged={ isLogged }/>} />
                     <Route path="/home" element={ <Home isLogged={ isLogged }/> } />
