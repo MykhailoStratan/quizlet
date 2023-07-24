@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import SplitText from '../UI/SplitText/SplitText';
 import Footer from '../UI/Footer/Footer';
 import CardsMock from '../Card/CardsMock/CardsMock';
+import TextHighlight from '../Demo/TextHighlight/TextHighlight';
 
 
 

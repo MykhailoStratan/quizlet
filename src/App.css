@@ -9,12 +9,8 @@
   min-height: 100vh;
 }
 
-/* 
-#root {
-  height: 100vh;
+*::selection {
+  /* color: #FF88BC; */
+  background-color: #FF88BC;
 }
-
-html, body {
-  height: 100%;
-} */
 

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import { FC, useState } from 'react';
 import Button from '../UI/Button/Button';
 import SignUp from './SignUp/SignUp';
 import SignIn from './SignIn/SignIn';
@@ -33,6 +33,7 @@ const Login: FC = () => {
             </div> : null }
             { displayOption === DISPLAY_OPTIONS.SIGN_IN ? <SignIn onUserData={ onUserData }/> : null }
             { displayOption === DISPLAY_OPTIONS.SIGN_UP ? <SignUp/> : null }
+            
         </div>
     );
 }

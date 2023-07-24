@@ -13,7 +13,7 @@ interface CardsCarouselProps {
     className?: string;
 }
 
-const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange, className}) => {
+const CardsCarousel: FC<CardsCarouselProps> = ({ dictionary, onCurrentWordChange, className }) => {
     const [cards, setCards] = useState<iWord[]>([]);
     const [cardIndex, setCardIndex] = useState<number>(0);
     const [currentCard, setCurrentCard] = useState<iWord>();

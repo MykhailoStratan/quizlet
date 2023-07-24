@@ -17,7 +17,7 @@ interface AddCardProps {
     dictionary: iDictionary;
 }
 
-const AddCard: FC<AddCardProps> = ({dictionary}) => {
+const AddCard: FC<AddCardProps> = ({ dictionary }) => {
     const [error, setError] = useState('');
     const [successMessage, setSuccessMessage] = useState('');
 

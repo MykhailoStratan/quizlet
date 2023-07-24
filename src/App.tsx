@@ -37,7 +37,9 @@ const App: FC = () => {
     };
 
     function onCurrentWordChange(wordData: iWordInfo | null) {
+        console.log({wordData})
         if (wordData) {
+            
             setWordInfo(wordData);
         } else {
             setWordInfo(null)
@@ -47,6 +49,8 @@ const App: FC = () => {
     function isWordInfoShown(wordInfoShowState: boolean) {
         setShowWordInfo(wordInfoShowState);
     }
+
+    // function onAddNewWord()
 
     useEffect(() => {
         (async () => {
@@ -62,7 +66,7 @@ const App: FC = () => {
             setActiveDictionary(null);
         }
 
-    },[isLogged])
+    }, [isLogged])
 
     return (
         <div className="App">
@@ -96,7 +100,8 @@ const App: FC = () => {
                                 <DictionaryList 
                                     onDictionarySelect={ onSelectActiveDictionary }
                                     activeDictionary={ activeDictionary } />
-                                <AddCard dictionary={ activeDictionary } />
+                                <AddCard 
+                                    dictionary={ activeDictionary } />
                             </>
                             : null
                     }/>
