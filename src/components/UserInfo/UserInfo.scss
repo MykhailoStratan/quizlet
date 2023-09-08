@@ -41,16 +41,29 @@ h3 {
     }
 }
 
-@media screen and (max-width: 720px) {
+@media screen and (max-width: 820px) {
     .user-form {
         width: 80%;
         height: auto;
-        grid-template-columns: auto auto;
+        grid-template-columns: 40% 50%;
         grid-template-rows: auto auto auto;
         padding: 40px 12px;
 
         &-button {
             bottom: -50px;
+        }
+
+        & label {
+            text-align: left;
+            // width: 80%;
+        }
+
+        & input {
+            width: auto;
+        }
+
+        & .dropdown-wrapper {
+            width: auto;
         }
     }
 }

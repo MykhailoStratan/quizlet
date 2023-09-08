@@ -57,7 +57,6 @@ const SignIn: FC<{onUserData: (value: any) => void}> = ({onUserData}) => {
             <Button 
                     className='btn-test-credentials'
                     onClick={ () => handleTestSignIn() }><TextHighlight>Use test credentials</TextHighlight></Button>
-                    {/* no wordsInfo data when new user added and new words added !!! */}
         </>
     );
 }

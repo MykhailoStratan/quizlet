@@ -41,7 +41,7 @@ const Menu: FC = () => {
     return (
         <div className="menu">
             <div className="menu-burger">
-                <input type="checkbox" onClick={ () => enableBackgroundBlur() } checked={ backgroundBlur }/>
+                <input type="checkbox" onClick={ !backgroundBlur ? () => enableBackgroundBlur() : () => disableBackgroundBlur() } checked={ backgroundBlur }/>
                 <div className={ backgroundBlur ? "menu-burger-background" : "menu-burger-background-hidden" }></div>
                 <span></span>
                 <span></span>
