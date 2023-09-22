@@ -10,7 +10,7 @@ Includes:
 - WordsAPI
 
 To run the project in the development mode enter to the command line "run npm dev" on the main branch
-Also, you need to have .env file with the next environment variables:
+Also, you need to have .env file in the root folder with the next environment variables:
 
 VITE_REACT_APP_FIREBASE_API_KEY
 
